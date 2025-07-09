@@ -15,8 +15,14 @@ public class SplashActivity extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(this);
 
         if (sessionManager.isLoggedIn()) {
-            // Đã đăng nhập → vào Homepage
-            startActivity(new Intent(this, MainActivity.class));
+            // Đã đăng nhập → kiểm tra role
+            String role = sessionManager.getUserRole();
+            if ("Staff".equalsIgnoreCase(role)) {
+                startActivity(new Intent(this, StaffActivity.class));
+            } else {
+                // Mặc định là customer
+                startActivity(new Intent(this, MainActivity.class));
+            }
         } else {
             // Chưa đăng nhập → vào Login
             startActivity(new Intent(this, LoginActivity.class));

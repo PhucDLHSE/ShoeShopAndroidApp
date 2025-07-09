@@ -3,6 +3,7 @@ package com.example.shoeshop.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.shoeshop.activities.LoginActivity;
 
@@ -13,6 +14,7 @@ public class SessionManager {
     private static final String KEY_USER_EMAIL = "user_email";
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_USER_PHONE = "phoneNumber";
+    private static final String KEY_USER_ROLE = "user_role";
 
 
     private SharedPreferences sharedPreferences;
@@ -25,12 +27,20 @@ public class SessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public void saveSession(String token, String userId, String name, String email, String phoneNumber ) {
+    public void saveSession(String token, String userId, String name, String email, String phoneNumber,String role ) {
         editor.putString(KEY_TOKEN, token);
         editor.putString(KEY_USER_ID, userId);
         editor.putString(KEY_USER_NAME, name);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USER_PHONE, phoneNumber);
+        editor.putString(KEY_USER_ROLE, role);
+        Log.d("SessionManager", "Saving session data:");
+        Log.d("SessionManager", "Token: " + token);
+        Log.d("SessionManager", "User ID: " + userId);
+        Log.d("SessionManager", "User Name: " + name);
+        Log.d("SessionManager", "User Email: " + email);
+        Log.d("SessionManager", "User Phone: " + phoneNumber);
+        Log.d("SessionManager", "User Role: " + role);
         editor.apply();
     }
 
@@ -54,6 +64,9 @@ public class SessionManager {
 
     public String getUserPhone() {
         return sharedPreferences.getString("phoneNumber", null);
+    }
+    public String getUserRole() {
+        return sharedPreferences.getString(KEY_USER_ROLE, null);
     }
 
     public void logout() {

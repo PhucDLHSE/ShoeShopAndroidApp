@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.shoeshop.R;
 import com.example.shoeshop.models.LoginRequest;
 import com.example.shoeshop.models.LoginResponse;
+import com.example.shoeshop.models.User;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.utils.CartStorage;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginRes = response.body();
+                    User user = response.body().getUser();
 
                     if (loginRes.getUser() != null && loginRes.getToken() != null) {
                         String name = loginRes.getUser().getName();
@@ -75,13 +77,20 @@ public class LoginActivity extends AppCompatActivity {
                         String token = loginRes.getToken();
                         String userId = loginRes.getUser().getUserID();
                         String phoneNumber = loginRes.getUser().getPhoneNumber();
-                        sessionManager.saveSession(token, userId, name, email, phoneNumber);
+                        String role = user.getRoleName();
+                        sessionManager.saveSession(token, userId, name, email, phoneNumber, role);
                         CartStorage.getInstance().loadCartFromPrefs(getApplicationContext());
                         Toast.makeText(LoginActivity.this,
                                 "Xin chào " + name,
                                 Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent;
+                        if("Staff".equals(role)) {
+                            intent = new Intent(LoginActivity.this, StaffActivity.class);
+                        }
+                        else {
+                            intent = new Intent(LoginActivity.this, MainActivity.class);
+                        }
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     } else {

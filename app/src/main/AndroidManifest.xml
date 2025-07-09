@@ -32,5 +32,6 @@
         <activity android:name=".activities.ProductDetailActivity" />
         <activity android:name=".activities.CartActivity" />
         <activity android:name=".activities.OrderListActivity" />
+        <activity android:name=".activities.StaffActivity"/>
     </application>
 </manifest>

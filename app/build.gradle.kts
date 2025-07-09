@@ -39,6 +39,13 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    // Thêm logging interceptor
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("androidx.security:security-crypto:1.1.0-alpha03")
+    implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.9.3")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

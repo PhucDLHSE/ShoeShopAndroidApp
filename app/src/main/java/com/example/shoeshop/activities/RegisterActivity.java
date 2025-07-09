@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.shoeshop.R;
 import com.example.shoeshop.models.LoginResponse;
 import com.example.shoeshop.models.RegisterRequest;
+import com.example.shoeshop.models.User;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.utils.SessionManager;
@@ -73,12 +74,14 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse res = response.body();
+                    User user = res.getUser();
                     sessionManager.saveSession(
                             res.getToken(),
                             res.getUser().getUserID(),
                             res.getUser().getName(),
                             res.getUser().getEmail(),
-                            res.getUser().getPhoneNumber()
+                            res.getUser().getPhoneNumber(),
+                            user.getRoleName()
                     );
 
                     Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
