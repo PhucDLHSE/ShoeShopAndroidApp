@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="32dp">
+
+        <!-- Logo App -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_shoe_logo"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Logo"
+            android:scaleType="centerInside" />
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/emailEditText"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="12dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="12dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Đăng nhập -->
+        <Button
+            android:id="@+id/loginButton"
+            android:text="Đăng nhập"
+            android:textAllCaps="false"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#FF5722"
+            android:textColor="#FFFFFF"/>
+
+        <!-- Đăng ký -->
+        <Button
+            android:id="@+id/btnGoToRegister"
+            android:text="Chưa có tài khoản? Đăng ký"
+            android:textAllCaps="false"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#E0E0E0"
+            android:textColor="#333333"/>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="#FFFFFF"
+    android:layout_marginBottom="8dp">
+
+    <!-- Hình ảnh sản phẩm -->
+    <ImageView
+        android:id="@+id/imgCartItem"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/image_border_bg"
+        android:src="@drawable/placeholder" />
+
+    <!-- Thông tin sản phẩm -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvCartItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvCartItemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giá: 0đ"
+            android:textColor="#D32F2F"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvCartItemQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số lượng: 1"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/btnRemoveItem"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_delete"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="Xóa"
+        android:tint="@android:color/holo_red_dark"/>
+</LinearLayout>

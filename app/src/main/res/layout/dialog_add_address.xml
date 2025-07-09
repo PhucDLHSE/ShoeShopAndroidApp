@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtFullAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên địa chỉ (VD: Nhà, Cty)"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edtStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số nhà, tên đường" />
+
+        <EditText
+            android:id="@+id/edtWard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phường/Xã" />
+
+        <EditText
+            android:id="@+id/edtDistrict"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quận/Huyện" />
+
+        <EditText
+            android:id="@+id/edtCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thành phố/Tỉnh" />
+
+        <CheckBox
+            android:id="@+id/chkIsDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đặt làm mặc định" />
+
+    </LinearLayout>
+</ScrollView>
