@@ -33,5 +33,8 @@
         <activity android:name=".activities.CartActivity" />
         <activity android:name=".activities.OrderListActivity" />
         <activity android:name=".activities.StaffActivity"/>
+        <activity android:name=".activities.StaffProfileActivity"/>
+        <activity android:name=".activities.ChooseDeliveryOrderActivity"/>
+        <activity android:name=".activities.CreateDeliveryNoteActivity"/>
     </application>
 </manifest>

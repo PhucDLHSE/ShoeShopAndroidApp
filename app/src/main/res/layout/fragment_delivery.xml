@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!-- Button Tạo phiếu giao hàng luôn hiện -->
+    <Button
+        android:id="@+id/btnCreateDeliveryNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tạo phiếu giao hàng"
+        android:layout_margin="8dp"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDelivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerDelivery"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

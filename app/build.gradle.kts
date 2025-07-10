@@ -45,6 +45,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("androidx.security:security-crypto:1.1.0-alpha03")
     implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.9.3")
+    // ViewPager2
+    implementation(libs.viewpager2)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">ShoeShop</string>
+    <string-array name="order_status_array">
+        <item>Đã đặt hàng</item>
+        <item>Đang thực hiện</item>
+        <item>Chờ vận chuyển</item>
+    </string-array>
+    <string-array name="delivery_status_array">
+        <item>Chờ lấy hàng</item>
+        <item>Đang giao</item>
+        <item>Đã giao</item>
+    </string-array>
+
 </resources>
 
