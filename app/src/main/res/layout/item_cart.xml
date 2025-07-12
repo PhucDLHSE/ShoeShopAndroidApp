@@ -6,7 +6,15 @@
     android:orientation="horizontal"
     android:padding="12dp"
     android:background="#FFFFFF"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:gravity="center_vertical">
+
+    <!-- CheckBox chọn sản phẩm -->
+    <CheckBox
+        android:id="@+id/checkboxSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp" />
 
     <!-- Hình ảnh sản phẩm -->
     <ImageView
@@ -55,6 +63,7 @@
             android:layout_marginTop="2dp" />
     </LinearLayout>
 
+    <!-- Nút xóa -->
     <ImageButton
         android:id="@+id/btnRemoveItem"
         android:layout_width="32dp"

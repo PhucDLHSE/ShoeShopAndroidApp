@@ -15,13 +15,22 @@
         android:background="@android:color/white"
         android:elevation="4dp">
 
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có đơn hàng nào"
+            android:textSize="16sp"
+            android:textColor="#888"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back"
             android:contentDescription="Quay lại"
-            android:tint="@android:color/black"
             android:padding="4dp"
             android:background="?android:selectableItemBackgroundBorderless" />
 

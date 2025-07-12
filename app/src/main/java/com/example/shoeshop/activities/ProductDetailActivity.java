@@ -216,10 +216,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     quantity[0]
             ));
 
-            // fullAddress = "" sẽ tự động dùng địa chỉ mặc định phía backend
             OrderRequest request = new OrderRequest("", orderItems);
 
-            // Gọi API
             apiService.createOrder("Bearer " + token, request).enqueue(new Callback<OrderResponse>() {
                 @Override
                 public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {

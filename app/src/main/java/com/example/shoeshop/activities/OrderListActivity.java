@@ -28,7 +28,7 @@ public class OrderListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private TextView tvHeaderTitle;
+    private TextView tvHeaderTitle, tvEmpty;
     private ImageView btnBack;
 
     private OrderAdapter orderAdapter;
@@ -41,42 +41,30 @@ public class OrderListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
 
-        recyclerView = findViewById(R.id.recyclerViewOrders);
-        progressBar = findViewById(R.id.progressBar);
-        tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
-        btnBack = findViewById(R.id.btnBack);
+        /* ------- Ánh xạ View ------- */
+        recyclerView   = findViewById(R.id.recyclerViewOrders);
+        progressBar    = findViewById(R.id.progressBar);
+        tvHeaderTitle  = findViewById(R.id.tvHeaderTitle);
+        btnBack        = findViewById(R.id.btnBack);
+        tvEmpty        = findViewById(R.id.tvEmpty);   // thêm TextView trong layout để hiển thị “Không có đơn”
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        sessionManager = new SessionManager(this);
-        apiService = ApiClient.getClient().create(ApiService.class);
 
+        /* ------- Khởi tạo API / Session ------- */
+        sessionManager = new SessionManager(this);
+        apiService     = ApiClient.getClient().create(ApiService.class);
+
+        /* ------- Lấy trạng thái cần hiển thị ------- */
         status = getIntent().getStringExtra("status");
         if (status == null) status = "ordered";
-
-        switch (status) {
-            case "ordered":
-                tvHeaderTitle.setText("Đơn hàng đã đặt");
-                break;
-            case "processing":
-                tvHeaderTitle.setText("Đang thực hiện");
-                break;
-            case "waiting-ship":
-                tvHeaderTitle.setText("Chờ vận chuyển");
-                break;
-            case "shipping":
-                tvHeaderTitle.setText("Đang giao hàng");
-                break;
-            case "complete":
-                tvHeaderTitle.setText("Đã giao hàng");
-                break;
-            default:
-                tvHeaderTitle.setText("Đơn hàng");
-        }
+        tvHeaderTitle.setText(getHeaderTitle(status));
 
         btnBack.setOnClickListener(v -> finish());
 
         fetchOrdersByStatus(status);
     }
+
+    /* ============================ API CALL ============================ */
 
     private void fetchOrdersByStatus(String status) {
         String token = sessionManager.getToken();
@@ -87,42 +75,59 @@ public class OrderListActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
+        tvEmpty.setVisibility(View.GONE);
 
         Call<List<Order>> call;
-        if (status.equals("ordered")) {
-            call = apiService.getOrderedOrders("Bearer " + token);
-        } else if (status.equals("processing")) {
-            call = apiService.getProcessingOrders("Bearer " + token);
-        } else if (status.equals("waiting-ship")) {
-            call = apiService.getWaitingShipOrders("Bearer " + token);
-        } else if(status.equals("shipping")){
-            call = apiService.getShippingOrders("Bearer " + token);
-        } else if(status.equals("complete")) {
-            call = apiService.getCompleteOrders("Bearer " + token);
-        } else  {
-            Toast.makeText(this, "Trạng thái đơn hàng không hợp lệ", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-            return;
+        switch (status) {
+            case "ordered":       call = apiService.getOrderedOrders      ("Bearer " + token); break;
+            case "processing":    call = apiService.getProcessingOrders   ("Bearer " + token); break;
+            case "waiting-ship":  call = apiService.getWaitingShipOrders ("Bearer " + token); break;
+            case "shipping":      call = apiService.getShippingOrders     ("Bearer " + token); break;
+            case "complete":      call = apiService.getCompleteOrders     ("Bearer " + token); break;
+            default:
+                Toast.makeText(this, "Trạng thái đơn hàng không hợp lệ", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                return;
         }
-
 
         call.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    orderAdapter = new OrderAdapter(response.body());
-                    recyclerView.setAdapter(orderAdapter);
+                    List<Order> list = response.body();
+                    if (list.isEmpty()) {
+                        tvEmpty.setVisibility(View.VISIBLE);     // “Chưa có đơn hàng…”
+                        recyclerView.setAdapter(null);
+                    } else {
+                        orderAdapter = new OrderAdapter(OrderListActivity.this, list);
+                        recyclerView.setAdapter(orderAdapter);
+                    }
                 } else {
-                    Toast.makeText(OrderListActivity.this, "Không thể tải danh sách đơn hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderListActivity.this,
+                            "Không thể tải danh sách đơn hàng", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Order>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(OrderListActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderListActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /* ============================ UTIL ============================ */
+
+    private String getHeaderTitle(String status) {
+        switch (status) {
+            case "ordered":      return "Đơn hàng đã đặt";
+            case "processing":   return "Đang thực hiện";
+            case "waiting-ship": return "Chờ vận chuyển";
+            case "shipping":     return "Đang giao hàng";
+            case "complete":     return "Đã giao hàng";
+            default:             return "Đơn hàng";
+        }
     }
 }
