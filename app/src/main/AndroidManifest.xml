@@ -28,6 +28,7 @@
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.UserInfoActivity" />
+        <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.AddressActivity" />
         <activity android:name=".activities.ProductDetailActivity" />
         <activity android:name=".activities.CartActivity" />

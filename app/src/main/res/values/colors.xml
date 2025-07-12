@@ -13,7 +13,15 @@
     <color name="nav_unselected">#8A8A8A</color> <!-- Màu khi chưa chọn -->
 
     <color name="purple_700">#3700B3</color>
-    <color name="background_light">#F5F5F5</color> <!-- nền app -->
+    <color name="background_light">#F5F5F5</color>
+
+    <color name="background_dark">#121212</color>
+    <color name="text_primary_light">#000000</color>
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_light">#888888</color>
+    <color name="text_secondary_dark">#BBBBBB</color>
+    <color name="card_background_light">#FFFFFF</color>
+    <color name="card_background_dark">#1E1E1E</color>
 
 
 </resources>

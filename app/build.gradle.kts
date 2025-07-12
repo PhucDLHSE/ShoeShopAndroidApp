@@ -47,6 +47,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.9.3")
     // ViewPager2
     implementation(libs.viewpager2)
+    implementation(libs.preference)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -14,17 +14,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoeshop.R;
 import com.example.shoeshop.activities.CartActivity;
+import com.example.shoeshop.activities.SettingsActivity;
 import com.example.shoeshop.adapters.ProductAdapter;
 import com.example.shoeshop.models.Product;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
+import com.example.shoeshop.utils.ThemeHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.fragmentHomeRecyclerView);
@@ -58,9 +58,16 @@ public class HomeFragment extends Fragment {
         micIcon = view.findViewById(R.id.micIcon);
 
         micIcon.setOnClickListener(v -> startVoiceRecognition());
+
         ImageButton cartButton = view.findViewById(R.id.cartButton);
         cartButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), CartActivity.class);
+            startActivity(new Intent(getActivity(), CartActivity.class));
+        });
+
+        ImageButton btnSettings = view.findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            intent.putExtra("from_tab", "home");
             startActivity(intent);
         });
 
@@ -79,17 +86,13 @@ public class HomeFragment extends Fragment {
                     adapter = new ProductAdapter(getContext(), response.body());
                     recyclerView.setAdapter(adapter);
                 } else {
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Lỗi tải sản phẩm", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getContext(), "Lỗi tải sản phẩm", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                if (getContext() != null) {
-                    Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e("API_ERROR", "Load product failed", t);
             }
         });
@@ -104,11 +107,10 @@ public class HomeFragment extends Fragment {
         try {
             startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
         } catch (ActivityNotFoundException e) {
-            if (getContext() != null) {
-                Toast.makeText(getContext(), "Thiết bị không hỗ trợ giọng nói", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getContext(), "Thiết bị không hỗ trợ giọng nói", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -122,6 +124,7 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
     private void searchProductsByName(String query) {
         Call<List<Product>> call = apiService.searchProducts(query, null, null, null, null);
         call.enqueue(new Callback<List<Product>>() {
@@ -131,18 +134,13 @@ public class HomeFragment extends Fragment {
                     adapter = new ProductAdapter(getContext(), response.body());
                     recyclerView.setAdapter(adapter);
                 } else {
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Không tìm thấy sản phẩm phù hợp", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getContext(), "Không tìm thấy sản phẩm phù hợp", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                if (getContext() != null) {
-                    Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-                Log.e("API_ERROR", "Load product failed", t);
+                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

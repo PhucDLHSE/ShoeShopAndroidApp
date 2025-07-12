@@ -68,7 +68,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Order order = orders.get(pos);
         List<OrderDetail> details = order.getOrderDetails();
 
-        /* ---- Sản phẩm đầu tiên ---- */
         if (details != null && !details.isEmpty()) {
             OrderDetail first = details.get(0);
             h.tvName.setText(first.getProductName());
@@ -82,7 +81,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     .error(R.drawable.image_error)
                     .into(h.imgThumb);
         }
-
         /* ---- Thông tin đơn ---- */
         String idShort = order.getOrderID().length() > 6
                 ? order.getOrderID().substring(order.getOrderID().length() - 6)
@@ -92,7 +90,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         h.tvDate.setText("Ngày đặt: " + toDDMMYYYY(order.getOrderDate()));
         h.tvAmount.setText(order.getTotalFormatted());
 
-        /* ---- Toggle view ---- */
         boolean hasMore    = details != null && details.size() > 1;
         boolean isExpanded = expandedMap.get(pos, false);
 
@@ -100,7 +97,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         h.btnToggleProducts.setText(isExpanded ? "Thu gọn ⌃" : "Xem thêm ˅");
         h.layoutExtraProducts.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
-        /* ---- Render các SP còn lại khi mở ---- */
         h.layoutExtraProducts.removeAllViews();
         if (isExpanded && hasMore) {
             for (int i = 1; i < details.size(); i++) {
@@ -124,7 +120,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 Glide.with(context)
                         .load(d.getImageUrl())
                         .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.image_error)
                         .into(img);
 
                 TextView tv = new TextView(context);
@@ -141,7 +136,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             }
         }
 
-        /* ---- Toggle click ---- */
         h.btnToggleProducts.setOnClickListener(v -> {
             expandedMap.put(pos, !expandedMap.get(pos, false));
             notifyItemChanged(pos);

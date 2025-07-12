@@ -3,6 +3,11 @@
     <style name="Base.Theme.ShoeShop" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:colorControlHighlight">@android:color/transparent</item>
         <!-- Customize your dark theme here. -->
+        <item name="colorBackground">@color/background_dark</item>
+        <item name="colorOnBackground">@color/text_primary_dark</item>
+        <item name="colorSecondaryText">@color/text_secondary_dark</item>
+        <item name="colorCardBackground">@color/card_background_dark</item>
+
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

@@ -5,24 +5,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.shoeshop.R;
 import com.example.shoeshop.activities.AddressActivity;
 import com.example.shoeshop.activities.CartActivity;
+import com.example.shoeshop.activities.MainActivity;
 import com.example.shoeshop.activities.OrderListActivity;
+import com.example.shoeshop.activities.SettingsActivity;
 import com.example.shoeshop.activities.UserInfoActivity;
 import com.example.shoeshop.utils.SessionManager;
+import com.example.shoeshop.utils.ThemeHelper;
 
 public class UserProfileFragment extends Fragment {
 
@@ -34,10 +33,8 @@ public class UserProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         return inflater.inflate(R.layout.fragment_user_profile, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,73 +48,34 @@ public class UserProfileFragment extends Fragment {
 
         textViewUserName.setText("Xin chào, " + userName);
 
-        btnCart.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), CartActivity.class);
-            startActivity(intent);
-        });
+        btnCart.setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), CartActivity.class)));
 
         btnSettings.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "Đi đến Cài đặt", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(requireContext(), SettingsActivity.class));
+            ((MainActivity) requireActivity()).openSettingsFromTab("profile");
         });
 
-        CardView accountInfoSection = view.findViewById(R.id.accountInfoSection);
-        accountInfoSection.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), UserInfoActivity.class);
-            startActivity(intent);
-        });
+        view.findViewById(R.id.accountInfoSection).setOnClickListener(v ->
+                startActivity(new Intent(getContext(), UserInfoActivity.class)));
 
-        LinearLayout layoutAddress = view.findViewById(R.id.layoutAddress);
-        layoutAddress.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AddressActivity.class);
-            startActivity(intent);
-        });
+        view.findViewById(R.id.layoutAddress).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), AddressActivity.class)));
 
-        LinearLayout layoutLogout = view.findViewById(R.id.layoutLogout);
-        layoutLogout.setOnClickListener(v -> {
-            new SessionManager(requireContext()).logout();
-        });
+        view.findViewById(R.id.layoutLogout).setOnClickListener(v ->
+                new SessionManager(requireContext()).logout());
 
-        // Đã đặt hàng
-        LinearLayout layoutOrdered = view.findViewById(R.id.layoutOrdered);
-        layoutOrdered.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), com.example.shoeshop.activities.OrderListActivity.class);
-            intent.putExtra("status", "ordered");
-            startActivity(intent);
-        });
+        setupOrderSection(view, R.id.layoutOrdered, "ordered");
+        setupOrderSection(view, R.id.layoutProcessing, "processing");
+        setupOrderSection(view, R.id.layoutWaitingShip, "waiting-ship");
+        setupOrderSection(view, R.id.layoutShipping, "shipping");
+        setupOrderSection(view, R.id.layoutComplete, "complete");
+    }
 
-        // Đang thực hiện
-        LinearLayout layoutProcessing = view.findViewById(R.id.layoutProcessing);
-        layoutProcessing.setOnClickListener(v -> {
+    private void setupOrderSection(View view, int layoutId, String status) {
+        view.findViewById(layoutId).setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), OrderListActivity.class);
-            intent.putExtra("status", "processing");
-            startActivity(intent);
-        });
-
-        //Chờ giao hàng
-        LinearLayout layoutWaitingShip = view.findViewById(R.id.layoutWaitingShip);
-        layoutWaitingShip.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), OrderListActivity.class);
-            intent.putExtra("status", "waiting-ship");
-            startActivity(intent);
-        });
-
-        //Đang giao hàng
-        LinearLayout layoutShipping = view.findViewById(R.id.layoutShipping);
-        layoutShipping.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), OrderListActivity.class);
-            intent.putExtra("status", "shipping");
-            startActivity(intent);
-        });
-
-        //Đã hoàn thành
-        LinearLayout layoutComplete = view.findViewById(R.id.layoutComplete);
-        layoutComplete.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), OrderListActivity.class);
-            intent.putExtra("status", "complete");
+            intent.putExtra("status", status);
             startActivity(intent);
         });
     }
-
 }
-

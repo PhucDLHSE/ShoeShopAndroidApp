@@ -51,7 +51,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Glide.with(context)
                 .load(product.getImageUrl())
                 .placeholder(R.drawable.placeholder)
-                .error(R.drawable.image_error)
                 .into(holder.imageViewProduct);
 
         holder.itemView.setOnClickListener(v -> {

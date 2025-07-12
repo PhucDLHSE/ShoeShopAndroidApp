@@ -72,6 +72,17 @@
             android:src="@drawable/ic_cart"
             android:contentDescription="Giỏ hàng"
             app:tint="@color/black" />
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="12dp"
+            android:padding="6dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/circle_background"
+            android:src="@drawable/ic_settings"
+            android:contentDescription="Cài đặt"
+            app:tint="@color/black" />
     </LinearLayout>
 
     <!-- 🔽 Dropdown gợi ý tìm kiếm -->

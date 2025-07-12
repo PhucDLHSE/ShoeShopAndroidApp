@@ -5,6 +5,11 @@
         <item name="android:colorControlHighlight">@android:color/transparent</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:windowBackground">@color/background_light</item>
+        <item name="colorBackground">@color/background_light</item>
+        <item name="colorOnBackground">@color/text_primary_light</item>
+        <item name="colorSecondaryText">@color/text_secondary_light</item>
+        <item name="colorCardBackground">@color/card_background_light</item>
+        <item name="switchStyle">@style/CustomSwitch</item>
 
     </style>
 
