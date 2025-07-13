@@ -35,11 +35,11 @@ public class StaffProfileActivity extends AppCompatActivity {
         String role = sessionManager.getUserRole();
 
         // Bind data to views
-        tvUserId.setText(userId);
-        tvName.setText(userName);
-        tvEmail.setText(userEmail);
-        tvPhone.setText(userPhone);
-        tvRole.setText(role);
+        tvUserId.setText("User Id: "+userId);
+        tvName.setText("User Name: "+userName);
+        tvEmail.setText("User Email: "+userEmail);
+        tvPhone.setText("User Phone: "+userPhone);
+        tvRole.setText("Role: "+role);
 
         // Logout
         btnLogout.setOnClickListener(v -> {

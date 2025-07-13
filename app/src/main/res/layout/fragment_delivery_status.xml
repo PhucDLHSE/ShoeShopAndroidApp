@@ -3,16 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
-    >
+    android:padding="8dp">
 
-    <!-- Sorting and filter UI could be placed here -->
+    <!-- Spinner loading cho riêng mỗi sub‑tab -->
+    <ProgressBar
+        android:id="@+id/pbTabLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
+    <!-- RecyclerView danh sách phiếu giao hàng -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDelivery"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="8dp"
         android:overScrollMode="never"/>
-
 </LinearLayout>

@@ -26,10 +26,52 @@
             android:text="Order ID" />
 
         <TextView
+            android:id="@+id/tvDeliveryStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Status" />
+
+        <TextView
+            android:id="@+id/tvDeliveryAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Address" />
+
+        <TextView
             android:id="@+id/tvShipperName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Shipper Name" />
+
+        <TextView
+            android:id="@+id/tvShipperPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shipper Phone" />
+
+        <TextView
+            android:id="@+id/tvDeliveryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Date" />
+
+        <TextView
+            android:id="@+id/tvStorageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Storage Name" />
+
+        <TextView
+            android:id="@+id/tvNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note" />
+
+        <TextView
+            android:id="@+id/tvIsActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is Active" />
 
         <LinearLayout
             android:layout_width="match_parent"

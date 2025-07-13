@@ -1,5 +1,7 @@
     package com.example.shoeshop.network;
 
+    import com.example.shoeshop.models.AddProductRequest;
+    import com.example.shoeshop.models.AddProductResponse;
     import com.example.shoeshop.models.CreateDeliveryRequest;
     import com.example.shoeshop.models.PatchDeliveryResponse;
     import com.example.shoeshop.models.CustomerAddress;
@@ -10,18 +12,24 @@
     import com.example.shoeshop.models.OrderRequest;
     import com.example.shoeshop.models.OrderResponse;
     import com.example.shoeshop.models.Product;
+    import com.example.shoeshop.models.PutProductRequest;
     import com.example.shoeshop.models.RegisterRequest;
     import com.example.shoeshop.models.StartOrderResponse;
 
     import java.util.List;
 
+    import okhttp3.MultipartBody;
+    import okhttp3.RequestBody;
     import retrofit2.Call;
     import retrofit2.http.Body;
+    import retrofit2.http.DELETE;
     import retrofit2.http.GET;
     import retrofit2.http.Header;
+    import retrofit2.http.Multipart;
     import retrofit2.http.PATCH;
     import retrofit2.http.POST;
     import retrofit2.http.PUT;
+    import retrofit2.http.Part;
     import retrofit2.http.Path;
     import retrofit2.http.Query;
 
@@ -47,6 +55,44 @@
                 @Query("Color") String color,
                 @Query("MinPrice") Double minPrice,
                 @Query("MaxPrice") Double maxPrice
+        );
+
+        //Product endpoints for staff
+        @Multipart
+        @POST("Product") // Add a new product
+        Call<AddProductResponse> addProduct(
+                @Header("Authorization") String token,
+                @Part("ProductName") RequestBody name,
+                @Part("Description") RequestBody desc,
+                @Part MultipartBody.Part imageFile,        // file ảnh
+                @Part("ImageUrl") RequestBody imageUrl,    // nếu bạn vẫn muốn gửi url
+                @Part("Size") RequestBody size,
+                @Part("Color") RequestBody color,
+                @Part("Price") RequestBody price,
+                @Part("Discount") RequestBody discount,
+                @Part("SoldQuantity") RequestBody soldQty,
+                @Part("StockQuantity") RequestBody stockQty
+        );
+        @Multipart
+        @PUT("Product/{productId}") // Update an existing product
+        Call<AddProductResponse> updateProduct(
+                @Header("Authorization") String token,
+                @Path("productId") String productId,
+                @Part("ProductName") RequestBody name,
+                @Part("Description") RequestBody desc,
+                @Part MultipartBody.Part imageFile,        // file ảnh
+                @Part("ImageUrl") RequestBody imageUrl,    // nếu bạn vẫn muốn gửi url
+                @Part("Size") RequestBody size,
+                @Part("Color") RequestBody color,
+                @Part("Price") RequestBody price,
+                @Part("Discount") RequestBody discount,
+                @Part("StockQuantity") RequestBody stockQty
+        );
+
+        @DELETE("Product/{productId}/hard") // Delete a product
+        Call<Void> deleteProduct(
+                @Header("Authorization") String token,
+                @Path("productId") String productId
         );
 
         // Customer address endpoints

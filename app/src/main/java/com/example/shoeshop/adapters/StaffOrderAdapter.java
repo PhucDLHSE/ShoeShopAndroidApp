@@ -5,6 +5,7 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.shoeshop.R;
+import com.example.shoeshop.dialogs.OrderDetailsDialog;
 import com.example.shoeshop.models.Order;
 import com.example.shoeshop.models.StartOrderResponse;
 import com.example.shoeshop.network.ApiService;
@@ -12,6 +13,8 @@ import com.example.shoeshop.network.ApiClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import java.text.NumberFormat;
 import java.util.List;
 
 public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH> {
@@ -33,13 +36,23 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     }
     @Override public void onBindViewHolder(@NonNull VH h, int i) {
         Order o = list.get(i);
-        h.tvOrderId.setText("Đơn #"+o.getOrderID());
-        h.tvDate.setText(o.getOrderDate());
-        h.tvPrice.setText(o.getTotalAmount()+" đ");
+        h.tvOrderId.setText("Đơn ID: "+o.getOrderID());
+        h.tvUserId.setText("Khách hàng ID : "+o.getUserID());
+        h.tvDate.setText("Ngày Đặt: "+o.getOrderDate());
+        NumberFormat formatter = NumberFormat.getInstance();
+        h.tvPrice.setText("Tổng tiền: "+ formatter.format(o.getTotalAmount())+" đ");
+        h.tvStatus.setText("Trạng thái: "+o.getStatus());
+        h.tvAddress.setText("Địa chỉ: "+o.getDeliveryAddress());
+        h.tvPaymentMethod.setText("Phương thức thanh toán: "+o.getMethodName());
+        h.tvIsActive.setText("Trạng thái hoạt động: "+(o.isActive() ? "Hoạt động" : "Không hoạt động"));
 
         // Reset visibility
         h.btnNext.setVisibility(View.GONE);
         h.btnCancel.setVisibility(View.GONE);
+        h.btnMore.setOnClickListener(v -> {
+            new OrderDetailsDialog(v.getContext(), o.getOrderDetails())
+                    .show();
+        });
 
         switch(status){
             case "ordered":
@@ -84,15 +97,22 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     @Override public int getItemCount(){ return list.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
-        TextView tvOrderId,tvDate,tvPrice;
+        TextView tvOrderId,tvDate,tvPrice, tvUserId, tvStatus, tvAddress, tvPaymentMethod, tvIsActive;
         Button btnNext,btnCancel;
+        ImageView btnMore;
         public VH(@NonNull View v) {
             super(v);
             tvOrderId = v.findViewById(R.id.tvOrderId);
+            tvUserId  = v.findViewById(R.id.tvUserId);
             tvDate    = v.findViewById(R.id.tvDate);
             tvPrice   = v.findViewById(R.id.tvPrice);
+            tvStatus  = v.findViewById(R.id.tvStatus);
+            tvAddress = v.findViewById(R.id.tvAddress);
+            tvPaymentMethod = v.findViewById(R.id.tvPaymentMethod);
+            tvIsActive = v.findViewById(R.id.tvIsActive);
             btnNext   = v.findViewById(R.id.btnNext);
             btnCancel = v.findViewById(R.id.btnCancel);
+            btnMore = v.findViewById(R.id.btnMore);
         }
     }
 }

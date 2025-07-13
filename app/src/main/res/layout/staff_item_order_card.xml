@@ -8,7 +8,13 @@
     card_view:cardElevation="4dp"
     android:layout_margin="8dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
     <LinearLayout
+        android:id="@+id/layoutOrderInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -23,10 +29,25 @@
             android:textSize="16sp"/>
 
         <TextView
+            android:id="@+id/tvUserId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User ID"
+            android:textSize="14sp"
+            />
+
+        <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
             android:textSize="14sp"/>
 
         <TextView
@@ -36,7 +57,41 @@
             android:text="Price"
             android:textSize="14sp"/>
 
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvPaymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Method"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvIsActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Active"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnMore"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_more_vert"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="More Options"/>
+
         <LinearLayout
+            android:id="@+id/layoutActions"
+            android:layout_below="@id/layoutOrderInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -56,5 +111,6 @@
                 android:text="Cancel"
                 android:layout_marginStart="8dp"/>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
+
 </androidx.cardview.widget.CardView>

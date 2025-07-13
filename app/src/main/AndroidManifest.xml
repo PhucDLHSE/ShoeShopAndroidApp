@@ -37,5 +37,8 @@
         <activity android:name=".activities.StaffProfileActivity"/>
         <activity android:name=".activities.ChooseDeliveryOrderActivity"/>
         <activity android:name=".activities.CreateDeliveryNoteActivity"/>
+        <activity android:name=".activities.EditProductActivity"/>
+        <activity android:name=".activities.SearchProductActivity"/>
+        <activity android:name=".activities.AddNewProductActivity"/>
     </application>
 </manifest>
