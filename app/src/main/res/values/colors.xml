@@ -26,5 +26,8 @@
     <color name="transparent_black">#80000000</color>
     <color name="teal">#008080</color>
 
+    <color name="star_yellow">#FFC107</color>
+    <color name="star_gray">#CCCCCC</color>
+
 
 </resources>

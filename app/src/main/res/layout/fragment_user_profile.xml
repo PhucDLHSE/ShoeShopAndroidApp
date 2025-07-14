@@ -259,39 +259,38 @@
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
 
-                    <!-- 6. Đánh giá -->
-                    <LinearLayout
-                        android:id="@+id/layoutFeedback"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
+<!--                    &lt;!&ndash; 6. Đánh giá &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/layoutFeedback"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:gravity="center">-->
 
-                        <FrameLayout
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/circle_background"
-                            android:layout_gravity="center">
+<!--                        <FrameLayout-->
+<!--                            android:layout_width="36dp"-->
+<!--                            android:layout_height="36dp"-->
+<!--                            android:background="@drawable/circle_background"-->
+<!--                            android:layout_gravity="center">-->
 
-                            <ImageView
-                                android:id="@+id/iconFeedback"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_review"
-                                android:contentDescription="Đánh giá" />
-                        </FrameLayout>
+<!--                            <ImageView-->
+<!--                                android:id="@+id/iconFeedback"-->
+<!--                                android:layout_width="24dp"-->
+<!--                                android:layout_height="24dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:src="@drawable/ic_review"-->
+<!--                                android:contentDescription="Đánh giá" />-->
+<!--                        </FrameLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Đánh giá"
-                            android:textSize="12sp"
-                            android:textColor="?attr/colorOnBackground"
-                            android:gravity="center"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Đánh giá"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:textColor="?attr/colorOnBackground"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_marginTop="4dp" />-->
+<!--                    </LinearLayout>-->
                 </LinearLayout>
             </HorizontalScrollView>
         </androidx.cardview.widget.CardView>

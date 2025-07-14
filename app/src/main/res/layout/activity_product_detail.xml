@@ -5,7 +5,36 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:fitsSystemWindows="true">
+    <!-- Header với nút back và tiêu đề -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="?attr/colorCardBackground"
+        android:elevation="4dp">
 
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Quay lại"
+            android:padding="4dp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:tint="?attr/colorOnBackground" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông tin sản phẩm"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -73,6 +102,25 @@
                 android:text="Mô tả sản phẩm"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp" />
+
+            <!-- Tiêu đề đánh giá -->
+            <TextView
+                android:id="@+id/tvFeedbackTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá sản phẩm"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#000000" />
+
+            <!-- Danh sách đánh giá -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFeedbackList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
         </LinearLayout>
     </ScrollView>
 

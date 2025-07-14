@@ -1,5 +1,7 @@
 package com.example.shoeshop.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class OrderData {
     private String orderID;
     private String userID;
@@ -71,5 +73,12 @@ public class OrderData {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @SerializedName("isReviewed")
+    private boolean isReviewed;
+
+    public boolean isReviewed() {
+        return isReviewed;
     }
 }

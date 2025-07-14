@@ -5,6 +5,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,15 +24,27 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/** -----------------------------------------------------------------
+ *  OrderAdapter kèm nút Đánh giá cho trạng thái "complete"
+ *  ---------------------------------------------------------------- */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
+
+    /* ===== Interface callback tới Activity để mở dialog đánh giá ===== */
+    public interface ReviewListener {
+        void onReviewClick(String productId, String productName);
+    }
 
     private final Context context;
     private final List<Order> orders;
     private final SparseBooleanArray expandedMap = new SparseBooleanArray();   // key = position
+    private final String status;        // "ordered", "complete", ...
+    private final ReviewListener listener;
 
-    public OrderAdapter(Context context, List<Order> orders) {
-        this.context = context;
-        this.orders  = orders;
+    public OrderAdapter(Context ctx, List<Order> orders, String status, ReviewListener l) {
+        this.context   = ctx;
+        this.orders    = orders;
+        this.status    = status;
+        this.listener  = l;
     }
 
     /* -------------------- ViewHolder -------------------- */
@@ -40,6 +53,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         TextView     tvName, tvProductInfo, tvOrderId, tvStatus, tvDate, tvAmount,
                 btnToggleProducts;
         LinearLayout layoutExtraProducts;
+        Button       btnReview;          // NEW
 
         OrderViewHolder(@NonNull View v) {
             super(v);
@@ -52,6 +66,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             tvAmount            = v.findViewById(R.id.tvAmount);
             layoutExtraProducts = v.findViewById(R.id.layoutExtraProducts);
             btnToggleProducts   = v.findViewById(R.id.btnToggleProducts);
+            btnReview           = v.findViewById(R.id.btnReview);
         }
     }
 
@@ -68,6 +83,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Order order = orders.get(pos);
         List<OrderDetail> details = order.getOrderDetails();
 
+        /* ----- Sản phẩm đầu tiên ----- */
         if (details != null && !details.isEmpty()) {
             OrderDetail first = details.get(0);
             h.tvName.setText(first.getProductName());
@@ -80,8 +96,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.image_error)
                     .into(h.imgThumb);
+
+            /* ----- Hiển thị nút Đánh giá nếu cần ----- */
+            if ("complete".equals(status) && !first.isReviewed()) {
+                h.btnReview.setVisibility(View.VISIBLE);
+                h.btnReview.setOnClickListener(v ->
+                        listener.onReviewClick(first.getProductID(), first.getProductName()));
+            } else {
+                h.btnReview.setVisibility(View.GONE);
+            }
         }
-        /* ---- Thông tin đơn ---- */
+
+        /* ----- Thông tin đơn hàng ----- */
         String idShort = order.getOrderID().length() > 6
                 ? order.getOrderID().substring(order.getOrderID().length() - 6)
                 : order.getOrderID();
@@ -90,6 +116,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         h.tvDate.setText("Ngày đặt: " + toDDMMYYYY(order.getOrderDate()));
         h.tvAmount.setText(order.getTotalFormatted());
 
+        /* ----- Xem thêm / Thu gọn ----- */
         boolean hasMore    = details != null && details.size() > 1;
         boolean isExpanded = expandedMap.get(pos, false);
 

@@ -2,6 +2,7 @@
 package com.example.shoeshop.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,21 +11,28 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shoeshop.R;
+import com.example.shoeshop.adapters.FeedbackAdapter;
+import com.example.shoeshop.adapters.FeedbackProductAdapter;
 import com.example.shoeshop.models.CartItem;
+import com.example.shoeshop.models.Feedback;
 import com.example.shoeshop.models.OrderRequest;
 import com.example.shoeshop.models.OrderResponse;
 import com.example.shoeshop.models.Product;
 import com.example.shoeshop.models.ProductOrderDetail;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
+import com.example.shoeshop.network.FeedbackApiClient;
 import com.example.shoeshop.utils.CartStorage;
 import com.example.shoeshop.utils.SessionManager;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,9 +45,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ImageView imgProductDetail;
     private TextView tvProductName, tvProductPrice, tvProductSize, tvProductStock, tvProductDescription;
     private Button btnAddToCart, btnOrderNow;
-
     private Product currentProduct;
     private ApiService apiService;
+    private RecyclerView rvFeedbackList;
+    private FeedbackProductAdapter feedbackAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvProductSize = findViewById(R.id.tvProductSize);
         tvProductStock = findViewById(R.id.tvProductStock);
         tvProductDescription = findViewById(R.id.tvProductDescription);
+
+        rvFeedbackList = findViewById(R.id.rvFeedbackList);
+        rvFeedbackList.setLayoutManager(new LinearLayoutManager(this));
+        feedbackAdapter = new FeedbackProductAdapter(this);
+        rvFeedbackList.setAdapter(feedbackAdapter);
 
         btnAddToCart = findViewById(R.id.btnAddToCart);
         btnOrderNow = findViewById(R.id.btnOrderNow);
@@ -76,6 +90,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     currentProduct = response.body();
                     displayProductDetails(currentProduct);
+                    fetchFeedbackList(productId);
+
                 } else {
                     Toast.makeText(ProductDetailActivity.this, "Không thể tải sản phẩm", Toast.LENGTH_SHORT).show();
                 }
@@ -255,6 +271,28 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         dialog.show();
+    }
+    private void fetchFeedbackList(String productId) {
+        ApiService api = FeedbackApiClient.getClient().create(ApiService.class);
+
+        api.getProductFeedback(productId).enqueue(new Callback<List<Feedback>>() {
+            @Override
+            public void onResponse(Call<List<Feedback>> call, Response<List<Feedback>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    feedbackAdapter.setData(response.body());
+                } else {
+                    Log.e("ProductDetail", "Response code: " + response.code());
+                    feedbackAdapter.setData(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Feedback>> call, Throwable t) {
+                t.printStackTrace();
+                feedbackAdapter.setData(null);
+                Log.e("ProductDetail", "Lỗi tải feedback: " + t.getMessage());
+            }
+        });
     }
 
 

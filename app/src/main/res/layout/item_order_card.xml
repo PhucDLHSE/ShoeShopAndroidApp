@@ -114,6 +114,15 @@
             android:textStyle="bold"
             android:textColor="@android:color/holo_red_dark"
             android:gravity="end" />
+        <Button
+            android:id="@+id/btnReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá"
+            android:padding="6dp"
+            android:backgroundTint="#FFC107"
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
 
         <!-- Nút xem thêm -->
         <TextView
@@ -126,5 +135,6 @@
             android:textStyle="bold"
             android:textSize="13sp"
             android:visibility="gone" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -2,17 +2,23 @@ package com.example.shoeshop.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoeshop.R;
 import com.example.shoeshop.adapters.OrderAdapter;
+import com.example.shoeshop.models.Feedback;
+import com.example.shoeshop.models.FeedbackRequest;
 import com.example.shoeshop.models.Order;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
@@ -97,10 +103,15 @@ public class OrderListActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Order> list = response.body();
                     if (list.isEmpty()) {
-                        tvEmpty.setVisibility(View.VISIBLE);     // “Chưa có đơn hàng…”
+                        tvEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setAdapter(null);
                     } else {
-                        orderAdapter = new OrderAdapter(OrderListActivity.this, list);
+                        orderAdapter = new OrderAdapter(
+                                OrderListActivity.this,
+                                list,
+                                status,
+                                (productId, productName) -> showReviewDialog(productId, productName)
+                        );
                         recyclerView.setAdapter(orderAdapter);
                     }
                 } else {
@@ -117,6 +128,66 @@ public class OrderListActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void showReviewDialog(String productId, String productName) {
+        View view = getLayoutInflater().inflate(R.layout.dialog_feedback, null);
+
+        TextView tvProductName = view.findViewById(R.id.tvProductName);
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+        EditText edtComment = view.findViewById(R.id.edtComment);
+        Button btnSend = view.findViewById(R.id.btnSend);
+
+        tvProductName.setText(productName);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .create();
+
+        btnSend.setOnClickListener(v -> {
+            int rating = (int) ratingBar.getRating();
+            String comment = edtComment.getText().toString().trim();
+
+            if (rating == 0 || comment.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đủ đánh giá và bình luận", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            sendFeedback(productId, rating, comment);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+    private void sendFeedback(String productId, int rating, String comment) {
+        SessionManager sessionManager = new SessionManager(this);
+        String token = sessionManager.getToken();
+
+        if (token == null || token.isEmpty()) {
+            Toast.makeText(this, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FeedbackRequest request = new FeedbackRequest(productId, rating, comment);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+        apiService.sendFeedback("Bearer " + token, request).enqueue(new Callback<Feedback>() {
+            @Override
+            public void onResponse(Call<Feedback> call, Response<Feedback> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(OrderListActivity.this, "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(OrderListActivity.this, "Không thể gửi đánh giá", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Feedback> call, Throwable t) {
+                Toast.makeText(OrderListActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     /* ============================ UTIL ============================ */
 

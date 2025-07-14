@@ -4,6 +4,7 @@
     import com.example.shoeshop.models.AddProductResponse;
     import com.example.shoeshop.models.CreateDeliveryRequest;
     import com.example.shoeshop.models.Feedback;
+    import com.example.shoeshop.models.FeedbackRequest;
     import com.example.shoeshop.models.PatchDeliveryResponse;
     import com.example.shoeshop.models.CustomerAddress;
     import com.example.shoeshop.models.DeliveryStatusResponse;
@@ -189,10 +190,22 @@
                 @Header("Authorization") String token,
                 @Path("productId") String productId
         );
+
+        @GET("Feedback/product/{productId}")
+        Call<List<Feedback>> getProductFeedback(
+                @Path("productId") String productId
+        );
+
+        @POST("Feedback")
+        Call<Feedback> sendFeedback(
+                @Header("Authorization") String token,
+                @Body FeedbackRequest request
+        );
         @DELETE("Feedback/{feedbackId}/hard") // Xóa phản hồi
         Call<Void> deleteFeedback(
                 @Header("Authorization") String token,
                 @Path("feedbackId") String feedbackId
         );
+
 
     }

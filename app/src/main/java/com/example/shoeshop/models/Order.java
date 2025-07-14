@@ -126,6 +126,13 @@ public class Order {
         @SerializedName("isActive")
         private boolean isActive;
 
+        @SerializedName("isReviewed")
+        private boolean isReviewed;
+
+        public boolean isReviewed() {
+            return isReviewed;
+        }
+
         /* ---- Getter / Setter ---- */
         public String getOrderDetailID()                { return orderDetailID; }
         public void   setOrderDetailID(String id)       { this.orderDetailID = id; }

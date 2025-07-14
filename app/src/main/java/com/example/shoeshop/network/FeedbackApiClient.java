@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/shoeshop/network/FeedbackApiClient.java
 package com.example.shoeshop.network;
 
 import com.example.shoeshop.utils.CustomDateAdapter;
