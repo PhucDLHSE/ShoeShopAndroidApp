@@ -40,5 +40,6 @@
         <activity android:name=".activities.EditProductActivity"/>
         <activity android:name=".activities.SearchProductActivity"/>
         <activity android:name=".activities.AddNewProductActivity"/>
+        <activity android:name=".activities.FeedbackByProductListActivity"/>
     </application>
 </manifest>

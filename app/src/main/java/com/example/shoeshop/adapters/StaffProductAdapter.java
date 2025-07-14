@@ -48,7 +48,8 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
     }
 
     @Override public void onBindViewHolder(@NonNull VH h, int i) {
-        Product p = list.get(i);
+        final int position = h.getAdapterPosition();
+        Product p = list.get(position);
         h.tvProductId.setText("ID: " + p.getProductID());
         h.tvProductName.setText(p.getProductName());
         h.tvStatus.setText("Status: " + (p.isStatus() ? "Available" : "Out of Stock"));
@@ -89,8 +90,8 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
                         api.deleteProduct("Bearer " + token, p.getProductID())
                                 .enqueue(new Callback<Void>(){
                                     @Override public void onResponse(Call<Void> c, Response<Void> r) {
-                                        list.remove(i);
-                                        notifyItemRemoved(i);
+                                        list.remove(position);
+                                        notifyItemRemoved(position);
                                     }
                                     @Override public void onFailure(Call<Void> c, Throwable t) {}
                                 });

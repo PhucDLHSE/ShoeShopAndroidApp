@@ -3,6 +3,7 @@
     import com.example.shoeshop.models.AddProductRequest;
     import com.example.shoeshop.models.AddProductResponse;
     import com.example.shoeshop.models.CreateDeliveryRequest;
+    import com.example.shoeshop.models.Feedback;
     import com.example.shoeshop.models.PatchDeliveryResponse;
     import com.example.shoeshop.models.CustomerAddress;
     import com.example.shoeshop.models.DeliveryStatusResponse;
@@ -80,8 +81,8 @@
                 @Path("productId") String productId,
                 @Part("ProductName") RequestBody name,
                 @Part("Description") RequestBody desc,
-                @Part MultipartBody.Part imageFile,        // file ảnh
-                @Part("ImageUrl") RequestBody imageUrl,    // nếu bạn vẫn muốn gửi url
+                @Part MultipartBody.Part imageFile,
+                @Part("ImageUrl") RequestBody imageUrl,
                 @Part("Size") RequestBody size,
                 @Part("Color") RequestBody color,
                 @Part("Price") RequestBody price,
@@ -173,6 +174,25 @@
         Call<PatchDeliveryResponse> cancelDelivery(
                 @Header("Authorization") String token,
                 @Path("deliveryId") String deliveryId
+        );
+
+        //Feedback endpoints
+        @GET("Feedback/all") // Lấy tất cả phản hồi
+        Call<List<Feedback>> getAllFeedbacks();
+        @GET("Feedback/user/{userId}") // Lấy phản hồi của người dùng
+        Call<List<Feedback>> getUserFeedbacks(
+                @Header("Authorization") String token,
+                @Path("userId") String userId
+        );
+        @GET("Feedback/product/{productId}") // Lấy phản hồi của sản phẩm
+        Call<List<Feedback>> getProductFeedbacks(
+                @Header("Authorization") String token,
+                @Path("productId") String productId
+        );
+        @DELETE("Feedback/{feedbackId}/hard") // Xóa phản hồi
+        Call<Void> deleteFeedback(
+                @Header("Authorization") String token,
+                @Path("feedbackId") String feedbackId
         );
 
     }
