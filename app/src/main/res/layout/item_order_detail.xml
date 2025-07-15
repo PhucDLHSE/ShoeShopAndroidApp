@@ -8,71 +8,86 @@
     card_view:cardCornerRadius="8dp">
 
     <LinearLayout
-        android:padding="12dp"
+        android:id="@+id/llContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvOrderDetailID"
-            android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ivOrderDetailImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/product_image"
+            android:layout_margin="8dp"/>
+        <LinearLayout
+            android:padding="12dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mã chi tiết đơn hàng"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvOrderID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mã đơn hàng"/>
+            <!--        <TextView-->
+            <!--            android:id="@+id/tvOrderDetailID"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:text="Mã chi tiết đơn hàng"-->
+            <!--            android:textStyle="bold"/>-->
 
-        <TextView
-            android:id="@+id/tvProductID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mã sản phẩm"/>
+            <!--        <TextView-->
+            <!--            android:id="@+id/tvOrderID"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:text="Mã đơn hàng"/>-->
 
-        <TextView
-            android:id="@+id/tvProductName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên sản phẩm"/>
+            <TextView
+                android:id="@+id/tvProductID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã sản phẩm"/>
 
-        <TextView
-            android:id="@+id/tvSizeColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Size, Màu sắc"/>
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên sản phẩm"/>
 
-        <TextView
-            android:id="@+id/tvQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Số lượng"/>
+            <TextView
+                android:id="@+id/tvSizeColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Size, Màu sắc"/>
 
-        <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giá đơn vị"/>
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số lượng"/>
 
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thành tiền"/>
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giá đơn vị"/>
 
-        <TextView
-            android:id="@+id/tvPaymentDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ngày thanh toán"/>
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thành tiền"/>
 
-        <TextView
-            android:id="@+id/tvIsActive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trạng thái hoạt động"/>
+            <TextView
+                android:id="@+id/tvPaymentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày thanh toán"/>
 
+            <TextView
+                android:id="@+id/tvIsActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái hoạt động"/>
+
+        </LinearLayout>
     </LinearLayout>
+
+
 </androidx.cardview.widget.CardView>

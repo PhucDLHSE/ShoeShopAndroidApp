@@ -23,13 +23,13 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapter.VH> {
+public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdapter.VH> {
     private final List<Product> list = new ArrayList<>();
     private final Context context;
     private final String token;
     private final ApiService api;
 
-    public StaffProductAdapter(Context context, String token) {
+    public SearchProductAdapter(Context context, String token) {
         this.context = context;
         this.token = token;
         this.api = ApiClient.getClient().create(ApiService.class);
@@ -66,6 +66,10 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
         h.tvStockQty.setText("Số Lượng Tồn Kho : " + p.getStockQuantity());
         h.tvIsActive.setText("Trạng Thái Hoạt Động: " + (p.isActive()?"Có":"Không" ));
 
+        //set visibility
+        h.btnEditProduct.setVisibility(View.GONE);
+        h.btnDeleteProduct.setVisibility(View.GONE);
+
         // Toggle logic
         h.llDetails.setVisibility(View.GONE); // Đảm bảo accordion ban đầu đóng
         h.tvToggleDetails.setText("Xem thêm");
@@ -74,32 +78,6 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
             boolean isVisible = h.llDetails.getVisibility() == View.VISIBLE;
             h.llDetails.setVisibility(isVisible ? View.GONE : View.VISIBLE);
             h.tvToggleDetails.setText(isVisible ? "Xem thêm" : "Thu gọn");
-        });
-
-        // Edit
-        h.btnEditProduct.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, EditProductActivity.class)
-                    .putExtra("productId", p.getProductID()));
-        });
-        h.btnEditProduct.setText("Sửa");
-        // Delete
-        h.btnDeleteProduct.setText("Xoá");
-        h.btnDeleteProduct.setOnClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Xác Nhận Xoá?")
-                    .setMessage("Xoá Sản Phẩm " + p.getProductName() + "?")
-                    .setPositiveButton("Xoá", (dlg, idx) -> {
-                        api.deleteProduct("Bearer " + token, p.getProductID())
-                                .enqueue(new Callback<Void>(){
-                                    @Override public void onResponse(Call<Void> c, Response<Void> r) {
-                                        list.remove(position);
-                                        notifyItemRemoved(position);
-                                    }
-                                    @Override public void onFailure(Call<Void> c, Throwable t) {}
-                                });
-                    })
-                    .setNegativeButton("Huỷ", null)
-                    .show();
         });
     }
 
@@ -111,7 +89,6 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
         LinearLayout llDetails;
         TextView tvDescription, tvSize, tvColor, tvPrice, tvDiscount, tvTotal, tvSoldQty, tvStockQty, tvIsActive;
         Button btnEditProduct, btnDeleteProduct;
-
         public VH(@NonNull View v) {
             super(v);
             ivProductImage  = v.findViewById(R.id.ivProductImage);

@@ -62,12 +62,13 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int position) {
         Feedback f = internalList.get(position);
         Log.d("FeedbackAdapter", "onBindViewHolder for position: " + position + ", Feedback ID: " + f.getFeedbackID());
-        h.tvUserName.setText(f.getName());
-        h.tvProductName.setText(f.getProductName());
-        h.tvRating.setText("Rating: " + f.getRating());
-        h.tvComment.setText(f.getComment());
-        h.tvDate.setText(fmt.format(f.getCreatedAt()));
+        h.tvUserName.setText("Khách Hàng: "+f.getName());
+        h.tvProductName.setText("Sản Phẩm: "+f.getProductName());
+        h.tvRating.setRating(f.getRating());
+        h.tvComment.setText("Nhận Xét: "+f.getComment());
+        h.tvDate.setText("Ngày Tạo: "+fmt.format(f.getCreatedAt()));
 
+        h.btnDeleteFeedback.setText("Xoá");
         h.btnDeleteFeedback.setOnClickListener(v -> {
             int pos = h.getBindingAdapterPosition();
             if (pos == RecyclerView.NO_POSITION) return;
@@ -108,8 +109,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.VH> {
         return internalList.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
-        TextView tvUserName, tvProductName, tvRating, tvComment, tvDate;
+        TextView tvUserName, tvProductName, tvComment, tvDate;
         Button btnDeleteFeedback;
+        RatingBar tvRating;
         VH(@NonNull View v) {
             super(v);
             tvUserName = v.findViewById(R.id.tvUserName);

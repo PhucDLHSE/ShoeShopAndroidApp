@@ -10,6 +10,8 @@ import com.example.shoeshop.models.DeliveryStatusResponse;
 import com.example.shoeshop.models.PatchDeliveryResponse;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.network.ApiClient;
+import com.example.shoeshop.utils.CustomDateAdapter;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,17 +46,21 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
     }
     @Override public void onBindViewHolder(@NonNull VH h, int i){
         var d = list.get(i);
-        h.tvDeliveryId.setText("DeliveryID: "+d.getDeliveryID());
+        h.tvDeliveryId.setText("Mã Vận Chuyển: "+d.getDeliveryID());
         h.tvDeliveryId.setTypeface(null, Typeface.BOLD);
-        h.tvOrderId.setText("OrderID: "+d.getOrderID());
+        h.tvOrderId.setText("Mã Đơn: "+d.getOrderID());
         h.tvShipperName.setText("Shipper: "+d.getShipperName());
-        h.tvDeliveryStatus.setText("Delivery Status: "+d.getDeliveryStatus());
-        h.tvDeliveryAddress.setText("Delivery Address: "+d.getDeliveryAddress());
-        h.tvShipperPhone.setText("Shipper Phone: "+d.getShipperPhone());
-        h.tvDeliveryDate.setText("Delivery Date: "+d.getDeliveryDate());
-        h.tvStorageName.setText("Storage Name: "+d.getStorageName());
-        h.tvNote.setText("Note: "+d.getNote());
-        h.tvIsActive.setText("Active: "+(d.isActive() ? "True" : "False"));
+        h.tvDeliveryStatus.setText("Trạng Thái: "+d.getDeliveryStatus());
+        h.tvDeliveryAddress.setText("Địa Chỉ Giao Hàng: "+d.getDeliveryAddress());
+        h.tvShipperPhone.setText("SĐT Shipper: "+d.getShipperPhone());
+        try{
+            h.tvDeliveryDate.setText("Ngày Giao Hàng: "+ CustomDateAdapter.formatBackendDateForUI(d.getDeliveryDate()));
+        }catch(Exception e){
+            h.tvDeliveryDate.setText("Ngày Giao Hàng: "+ d.getDeliveryDate());
+        }
+        h.tvStorageName.setText("Kho: "+d.getStorageName());
+        h.tvNote.setText("Ghi Chú: "+d.getNote());
+        h.tvIsActive.setText("Hoạt Động: "+(d.isActive() ? "Có" : "Không"));
 
         h.btnNext.setVisibility(View.GONE);
         h.btnCancel.setVisibility(View.GONE);

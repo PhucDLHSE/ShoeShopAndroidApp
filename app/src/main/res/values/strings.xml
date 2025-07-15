@@ -10,6 +10,7 @@
         <item>Đang giao</item>
         <item>Đã giao</item>
     </string-array>
+    <string name="product_image">Product Image</string>
 
 </resources>
 
