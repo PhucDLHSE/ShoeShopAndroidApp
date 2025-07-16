@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +23,7 @@
             android:contentDescription="Quay lại"
             android:padding="4dp"
             android:background="?android:selectableItemBackgroundBorderless"
-            android:tint="?attr/colorOnBackground" />
+            app:tint="?attr/colorOnBackground" />
 
         <TextView
             android:id="@+id/tvHeaderTitle"
