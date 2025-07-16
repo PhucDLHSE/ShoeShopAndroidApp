@@ -66,8 +66,8 @@
     <!-- Nút xóa -->
     <ImageButton
         android:id="@+id/btnRemoveItem"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:src="@drawable/ic_delete"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="Xóa"
