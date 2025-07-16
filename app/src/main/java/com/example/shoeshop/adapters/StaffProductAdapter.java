@@ -20,6 +20,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,13 +57,15 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
         h.tvStatus.setText("Trạng Thái: " + (p.isStatus() ? "Có Sẵn" : "Hết Hàng"));
         Glide.with(context).load(p.getImageUrl()).into(h.ivProductImage);
 
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+
         // Dữ liệu bên trong phần chi tiết
         h.tvDescription.setText("Mô Tả SP: " + p.getDescription());
         h.tvSize.setText("Kích Cỡ: " + p.getSize());
         h.tvColor.setText("Màu SP: " + p.getColor());
-        h.tvPrice.setText("Giá Niêm Yết: " + p.getPrice());
+        h.tvPrice.setText("Giá Niêm Yết: " + formatter.format(p.getPrice())+" đ");
         h.tvDiscount.setText("Khuyến Mãi: " + p.getDiscount()+"%");
-        h.tvTotal.setText("Giá SP: " + p.getTotal());
+        h.tvTotal.setText("Giá SP: " + formatter.format(p.getTotal())+" đ");
         h.tvSoldQty.setText("Đã Bán: " + p.getSoldQuantity());
         h.tvStockQty.setText("Số Lượng Tồn Kho : " + p.getStockQuantity());
         h.tvIsActive.setText("Trạng Thái Hoạt Động: " + (p.isActive()?"Có":"Không" ));
