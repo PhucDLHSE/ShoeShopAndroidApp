@@ -11,4 +11,13 @@
         android:id="@+id/nav_notifications"
         android:icon="@drawable/ic_notifications"
         android:title="Thông báo" />
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_map"
+        android:title="Bản đồ" />
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/ic_chat"
+        android:title="Chat AI" />
+
 </menu>

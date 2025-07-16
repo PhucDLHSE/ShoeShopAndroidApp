@@ -41,10 +41,13 @@ dependencies {
     implementation(libs.constraintlayout)
 
     // Thêm logging interceptor
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.12.0")
     implementation ("androidx.security:security-crypto:1.1.0-alpha03")
-    implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.9.3")
+    implementation ("org.osmdroid:osmdroid-android:6.1.16")
+    implementation("com.google.code.gson:gson:2.10.1")
+
     // ViewPager2
     implementation(libs.viewpager2)
     implementation(libs.preference)
