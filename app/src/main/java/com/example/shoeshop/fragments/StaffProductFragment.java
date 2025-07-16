@@ -49,13 +49,15 @@ public class StaffProductFragment extends Fragment {
 
         // refresh list
         btnRefresh.setOnClickListener(x -> loadProducts());
+        btnRefresh.setText("Làm Mới");
 
         // search
         btnSearch.setOnClickListener(x -> startActivity(new Intent(getContext(), SearchProductActivity.class)));
+        btnSearch.setText("Tìm Kiếm");
 
         // add new
         btnAdd.setOnClickListener(x -> startActivity(new Intent(getContext(), AddNewProductActivity.class)));
-
+        btnAdd.setText("Thêm SP");
         // initial load
         loadProducts();
     }

@@ -28,12 +28,15 @@
             android:text="Product Name"
             android:textSize="14sp" />
 
-        <TextView
+        <RatingBar
             android:id="@+id/tvRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rating: 5"
-            android:textSize="14sp"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:isIndicator="true"
+            android:progressTint="@color/star_yellow"
+            android:progressBackgroundTint="@color/star_gray"
             />
 
         <TextView
@@ -42,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Comment content..."
-            android:textSize="14sp" />
+            android:textSize="14sp"
             />
 
         <TextView

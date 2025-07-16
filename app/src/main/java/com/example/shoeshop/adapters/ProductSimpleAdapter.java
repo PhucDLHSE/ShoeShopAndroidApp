@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.example.shoeshop.R;
 import com.example.shoeshop.models.Product;
 import java.util.ArrayList;
@@ -40,6 +42,12 @@ public class ProductSimpleAdapter extends RecyclerView.Adapter<ProductSimpleAdap
     @Override public void onBindViewHolder(@NonNull VH holder, int position) {
         Product p = list.get(position);
         holder.tvName.setText(p.getProductName());
+        holder.tvDescription.setText(p.getDescription());
+        Glide.with(context)
+                .load(p.getImageUrl())
+                .placeholder(R.drawable.placeholder) // Optional: add a placeholder image
+                .error(R.drawable.image_error) // Optional: add an error image
+                .into(holder.ivImage);
         holder.itemView.setOnClickListener(v -> listener.onClick(p));
     }
 
@@ -48,10 +56,13 @@ public class ProductSimpleAdapter extends RecyclerView.Adapter<ProductSimpleAdap
     }
 
     static class VH extends RecyclerView.ViewHolder {
-        TextView tvName;
+        TextView tvName, tvDescription;
+        ImageView ivImage;
         VH(@NonNull View v) {
             super(v);
             tvName = v.findViewById(R.id.tvSimpleProductName);
+            ivImage = v.findViewById(R.id.ivSimpleProductImage);
+            tvDescription = v.findViewById(R.id.tvSimpleProductDescription);
         }
     }
 }

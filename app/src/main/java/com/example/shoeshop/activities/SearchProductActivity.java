@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.shoeshop.R;
+import com.example.shoeshop.adapters.SearchProductAdapter;
 import com.example.shoeshop.adapters.StaffProductAdapter;
 import com.example.shoeshop.models.Product;
 import com.example.shoeshop.network.ApiService;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class SearchProductActivity extends AppCompatActivity {
     private RecyclerView rv;
-    private StaffProductAdapter adapter;
+    private SearchProductAdapter adapter;
     private EditText etSearchName, etSearchSize, etSearchColor, etMinPrice, etMaxPrice;
     private Button btnPerformSearch;
 
@@ -36,9 +37,16 @@ public class SearchProductActivity extends AppCompatActivity {
         etMaxPrice    = findViewById(R.id.etMaxPrice);
         btnPerformSearch = findViewById(R.id.btnPerformSearch);
 
+        etSearchName.setHint("Tên SP");
+        etSearchSize.setHint("Kích Cỡ SP");
+        etSearchColor.setHint("Màu SP");
+        etMinPrice.setHint("Giá Thấp Nhất");
+        etMaxPrice.setHint("Giá Cao Nhất");
+        btnPerformSearch.setText("Tìm");
+
         rv = findViewById(R.id.rvSearchResults);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StaffProductAdapter(this, new SessionManager(this).getToken());
+        adapter = new SearchProductAdapter(this, new SessionManager(this).getToken());
         rv.setAdapter(adapter);
 
         btnPerformSearch.setOnClickListener(v -> {

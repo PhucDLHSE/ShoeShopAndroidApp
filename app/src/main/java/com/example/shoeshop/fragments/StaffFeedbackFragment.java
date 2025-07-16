@@ -25,7 +25,7 @@ public class StaffFeedbackFragment extends Fragment {
                 new FeedbackProductFragment()
         );
         vp.setAdapter(new FeedbackPagerAdapter(this, frags));
-        String[] titles = {"All","By Product"};
+        String[] titles = {"Tất Cả","Theo Sản Phẩm"};
         new TabLayoutMediator(tab, vp, (t,pos)->t.setText(titles[pos])).attach();
     }
 }

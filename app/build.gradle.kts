@@ -54,6 +54,7 @@ dependencies {
 
     //refresh layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation(libs.media3.common)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

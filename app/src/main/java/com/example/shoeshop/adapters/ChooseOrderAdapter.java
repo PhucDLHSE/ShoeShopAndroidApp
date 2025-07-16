@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.shoeshop.R;
 import com.example.shoeshop.models.Order;
+import com.example.shoeshop.utils.CustomDateAdapter;
+
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -35,14 +38,20 @@ public class ChooseOrderAdapter extends RecyclerView.Adapter<ChooseOrderAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order order = orders.get(position);
         // Bind data
-        holder.tvOrderId.setText("Đơn #" + order.getOrderID());
+        holder.tvOrderId.setText("Mã Đơn: " + order.getOrderID());
         holder.tvUserId.setText("Người dùng: " + order.getUserID());
-        holder.tvDate.setText(order.getOrderDate());
-        holder.tvStatus.setText(order.getStatus());
-        holder.tvPrice.setText(order.getTotalAmount() + " đ");
-        holder.tvAddress.setText(order.getDeliveryAddress());
-        holder.tvPaymentMethod.setText(order.getMethodName());
-        holder.tvIsActive.setText(order.isActive() ? "Hoạt động" : "Không hoạt động");
+        try{
+            holder.tvDate.setText("Ngày Đặt: " + CustomDateAdapter.formatBackendDateForUI(order.getOrderDate()));
+        } catch (Exception e) {
+            // Fallback to raw date if formatting fails
+            holder.tvDate.setText("Ngày Đặt: " + order.getOrderDate());
+        }
+        holder.tvStatus.setText("Trạng Thái: "+order.getStatus());
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        holder.tvPrice.setText("Tổng Đơn: "+ formatter.format(order.getTotalAmount()) + " đ");
+        holder.tvAddress.setText("Địa Chỉ Giao Hàng: "+ order.getDeliveryAddress());
+        holder.tvPaymentMethod.setText("Phương Thức Thanh Toán: "+ order.getMethodName());
+        holder.tvIsActive.setText("Trạng Thái Hoạt Động: "+ (order.isActive() ? "Hoạt động" : "Không hoạt động"));
 
         // Highlight selected
         holder.itemView.setBackgroundColor(

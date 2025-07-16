@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Product"
+            android:text="Chỉnh Sửa Sản Phẩm"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"
@@ -22,7 +22,7 @@
             android:id="@+id/tvProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Name:"
+            android:text="Tên Sản Phẩm:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -31,13 +31,13 @@
             android:id="@+id/etProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Name" />
+            android:hint="Tên Sản Phẩm" />
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description:"
+            android:text="Mô Tả Sản Phẩm:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -47,13 +47,13 @@
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description" />
+            android:hint="Mô Tả Sản Phẩm" />
 
         <TextView
             android:id="@+id/tvImageUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Image URL:"
+            android:text="URL Hình Ảnh:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -63,13 +63,13 @@
             android:id="@+id/etImageUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Image URL" />
+            android:hint="URL Hình Ảnh" />
 
         <TextView
             android:id="@+id/tvSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Size:"
+            android:text="Kích Cỡ Sản Phẩm:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -79,13 +79,13 @@
             android:id="@+id/etSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Size" />
+            android:hint="Kích Cỡ Sản Phẩm" />
 
         <TextView
             android:id="@+id/tvColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Color:"
+            android:text="Màu Sản Phẩm:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -95,13 +95,13 @@
             android:id="@+id/etColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Color" />
+            android:hint="Màu Sản Phẩm" />
 
         <TextView
             android:id="@+id/tvPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Price:"
+            android:text="Giá Sản Phẩm:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -112,13 +112,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:hint="Price" />
+            android:hint="Giá Sản Phẩm" />
 
         <TextView
             android:id="@+id/tvDiscount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Discount:"
+            android:text="Khuyến Mãi(%):"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -129,13 +129,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:hint="Discount" />
+            android:hint="Khuyến Mãi(%)" />
 
         <TextView
             android:id="@+id/tvStockQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stock Quantity:"
+            android:text="Số Lượng Tồn Kho:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -146,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="Stock Quantity" />
+            android:hint="Số Lượng Tồn Kho" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,13 +159,13 @@
                 android:id="@+id/btnCancelProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel" />
+                android:text="Huỷ" />
 
             <Button
                 android:id="@+id/btnUpdateProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Update"
+                android:text="Cập Nhật"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 

@@ -10,6 +10,8 @@ import com.example.shoeshop.models.Order;
 import com.example.shoeshop.models.StartOrderResponse;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.network.ApiClient;
+import com.example.shoeshop.utils.CustomDateAdapter;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,9 +38,14 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     }
     @Override public void onBindViewHolder(@NonNull VH h, int i) {
         Order o = list.get(i);
-        h.tvOrderId.setText("Đơn ID: "+o.getOrderID());
-        h.tvUserId.setText("Khách hàng ID : "+o.getUserID());
-        h.tvDate.setText("Ngày Đặt: "+o.getOrderDate());
+        h.tvOrderId.setText("Mã Đơn: "+o.getOrderID());
+        h.tvUserId.setText("Mã Khách hàng: "+o.getUserID());
+        try {
+            h.tvDate.setText("Ngày Đặt: " + CustomDateAdapter.formatBackendDateForUI(o.getOrderDate()));
+        } catch (Exception e) {
+            // Fallback to raw date if formatting fails
+            h.tvDate.setText("Ngày Đặt: " + o.getOrderDate());
+        }
         NumberFormat formatter = NumberFormat.getInstance();
         h.tvPrice.setText("Tổng tiền: "+ formatter.format(o.getTotalAmount())+" đ");
         h.tvStatus.setText("Trạng thái: "+o.getStatus());
@@ -57,19 +64,29 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
         switch(status){
             case "ordered":
                 h.btnNext.setText("Đang thực hiện");
+                h.btnCancel.setText("Hủy");
                 h.btnNext.setVisibility(View.VISIBLE);
                 h.btnCancel.setVisibility(View.VISIBLE);
                 h.btnNext.setOnClickListener(v-> {
                     api.startProcessingOrder("Bearer "+token, o.getOrderID())
                             .enqueue(callbackRemove(i));
                 });
+                h.btnCancel.setOnClickListener(v-> {
+                    api.cancelOrder("Bearer "+token, o.getOrderID())
+                            .enqueue(callbackRemove(i));
+                });
                 break;
             case "processing":
                 h.btnNext.setText("Chờ vận chuyển");
+                h.btnCancel.setText("Hủy");
                 h.btnNext.setVisibility(View.VISIBLE);
                 h.btnCancel.setVisibility(View.VISIBLE);
                 h.btnNext.setOnClickListener(v-> {
                     api.pendingShipOrder("Bearer "+token, o.getOrderID())
+                            .enqueue(callbackRemove(i));
+                });
+                h.btnCancel.setOnClickListener(v-> {
+                    api.cancelOrder("Bearer "+token, o.getOrderID())
                             .enqueue(callbackRemove(i));
                 });
                 break;

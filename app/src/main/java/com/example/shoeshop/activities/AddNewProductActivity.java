@@ -27,6 +27,7 @@ public class AddNewProductActivity extends AppCompatActivity {
     private EditText etName, etDesc, etImageUrl, etSize, etColor, etPrice, etDiscount, etStock, etSold;
     private Button btnSave, btnCancel, btnPickImage;
     private Uri selectedImageUri;
+    private TextView tvTitle;
     private static final int PICK_IMAGE_REQUEST = 200;
 
     @Override
@@ -35,6 +36,7 @@ public class AddNewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
 
         // Bind views
+        tvTitle      = findViewById(R.id.tvAddProductTitle);
         etName       = findViewById(R.id.etProductName);
         etDesc       = findViewById(R.id.etDescription);
         etImageUrl   = findViewById(R.id.etImageUrl);
@@ -47,6 +49,22 @@ public class AddNewProductActivity extends AppCompatActivity {
         btnSave      = findViewById(R.id.btnSaveProduct);
         btnCancel    = findViewById(R.id.btnCancelProduct);
         btnPickImage = findViewById(R.id.btnPickImage);
+
+        //set all text vietnamese here
+
+        tvTitle.setText("Thêm Sản Phẩm Mới");
+        etName.setHint("Tên sản phẩm");
+        etDesc.setHint("Mô tả");
+        etImageUrl.setHint("URL hình ảnh");
+        etSize.setHint("Kích cỡ");
+        etColor.setHint("Màu sắc");
+        etPrice.setHint("Giá");
+        etDiscount.setHint("Giảm giá (%)");
+        etSold.setHint("Đã bán");
+        etStock.setHint("Tồn kho");
+        btnPickImage.setText("Chọn ảnh");
+        btnSave.setText("Lưu");
+        btnCancel.setText("Hủy");
 
         // Pick image
         btnPickImage.setOnClickListener(v -> {

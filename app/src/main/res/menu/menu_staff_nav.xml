@@ -4,23 +4,23 @@
     <item
         android:id="@+id/nav_orders"
         android:icon="@drawable/ic_order"
-        android:title="Orders" />
+        android:title="Đơn" />
 
     <!-- Delivery Tab -->
     <item
         android:id="@+id/nav_delivery"
         android:icon="@drawable/ic_delivery"
-        android:title="Delivery" />
+        android:title="Vận Chuyển" />
 
     <!-- Product Tab -->
     <item
         android:id="@+id/nav_product"
         android:icon="@drawable/ic_box"
-        android:title="Product" />
+        android:title="Sản Phẩm" />
 
     <!-- Feedback Tab -->
     <item
         android:id="@+id/nav_feedback"
         android:icon="@drawable/ic_feedback"
-        android:title="Feedback" />
+        android:title="Đánh Giá" />
 </menu>
