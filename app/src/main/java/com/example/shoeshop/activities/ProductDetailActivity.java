@@ -49,6 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ApiService apiService;
     private RecyclerView rvFeedbackList;
     private FeedbackProductAdapter feedbackAdapter;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvProductSize = findViewById(R.id.tvProductSize);
         tvProductStock = findViewById(R.id.tvProductStock);
         tvProductDescription = findViewById(R.id.tvProductDescription);
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {onBackPressed();}
+        });
 
         rvFeedbackList = findViewById(R.id.rvFeedbackList);
         rvFeedbackList.setLayoutManager(new LinearLayoutManager(this));
