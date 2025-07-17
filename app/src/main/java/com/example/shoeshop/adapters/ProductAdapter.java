@@ -45,7 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Log.d("ProductAdapter", "Product: " + product.getProductName());
         Log.d("ProductAdapter", "Image URL: " + product.getImageUrl());
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-        String priceFormatted = formatter.format(product.getPrice()) + "đ";
+        String priceFormatted = formatter.format(product.getTotal()) + "đ";
         holder.textViewPrice.setText("Giá: " + priceFormatted);
 
         Glide.with(context)

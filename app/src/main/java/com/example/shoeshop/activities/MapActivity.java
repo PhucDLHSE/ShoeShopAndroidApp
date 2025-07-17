@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import android.widget.ImageButton; // Import ImageButton
+import android.widget.ImageView;
 
 import com.example.shoeshop.R;
 
@@ -22,7 +22,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 public class MapActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView mapView;
-    private ImageButton backButton; // Khai báo ImageButton
+    private ImageView btnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +34,21 @@ public class MapActivity extends AppCompatActivity {
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
 
-        // Ánh xạ nút back và thiết lập sự kiện click
-        backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            // Khi nút back được nhấn, kết thúc MapActivity và trở về Activity trước đó (MainActivity)
+        btnButton = findViewById(R.id.btnButton);
+        btnButton.setOnClickListener(v -> {
             finish();
         });
 
         requestPermissionsIfNecessary();
 
         mapView.getController().setZoom(16.0);
-        GeoPoint startPoint = new GeoPoint(10.762622, 106.660172); // Hồ Chí Minh
+        GeoPoint startPoint = new GeoPoint(10.818795, 106.651800);
         mapView.getController().setCenter(startPoint);
 
         Marker marker = new Marker(mapView);
         marker.setPosition(startPoint);
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        marker.setTitle("Vị trí cửa hàng");
+        marker.setTitle("Đ. Trường Sơn, P. Tân, Sơn Hoà, Hồ Chí Minh, Việt Nam");
         mapView.getOverlays().add(marker);
     }
 
@@ -80,12 +78,12 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume(); //needed for osmdroid
+        mapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();  //needed for osmdroid
+        mapView.onPause();
     }
 }

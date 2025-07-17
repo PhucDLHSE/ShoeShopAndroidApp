@@ -52,7 +52,7 @@ public class OrderListActivity extends AppCompatActivity {
         progressBar    = findViewById(R.id.progressBar);
         tvHeaderTitle  = findViewById(R.id.tvHeaderTitle);
         btnBack        = findViewById(R.id.btnBack);
-        tvEmpty        = findViewById(R.id.tvEmpty);   // thêm TextView trong layout để hiển thị “Không có đơn”
+        tvEmpty        = findViewById(R.id.tvEmpty);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

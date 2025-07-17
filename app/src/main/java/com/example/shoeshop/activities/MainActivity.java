@@ -59,17 +59,17 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            currentTabId = id; // Cập nhật tab hiện tại
+            currentTabId = id;
             if (id == R.id.nav_home) {
                 loadFragment(new HomeFragment());
                 return true;
             } else if (id == R.id.nav_profile) {
                 loadFragment(new UserProfileFragment());
                 return true;
-            } else if (id == R.id.nav_chat) { // 👈 Thêm xử lý cho Chat AI
+            } else if (id == R.id.nav_chat) {
                 startActivity(new Intent(MainActivity.this, ChatAiActivity.class));
                 return true;
-            } else if (id == R.id.nav_map) { // 👈 Thêm xử lý cho Map
+            } else if (id == R.id.nav_map) {
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
                 return true;
             } else if (id == R.id.nav_notifications) {
@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        // Đảm bảo rằng tab được chọn ban đầu chính xác
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(currentTabId);
         }
