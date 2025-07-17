@@ -2,7 +2,7 @@ package com.example.shoeshop.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +42,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
 
         holder.textViewName.setText(product.getProductName());
-        Log.d("ProductAdapter", "Product: " + product.getProductName());
-        Log.d("ProductAdapter", "Image URL: " + product.getImageUrl());
+
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-        String priceFormatted = formatter.format(product.getTotal()) + "đ";
-        holder.textViewPrice.setText("Giá: " + priceFormatted);
+        String priceFormatted = formatter.format(product.getPrice()) + "đ";
+        String totalFormatted = formatter.format(product.getTotal()) + "đ";
+        String discountFormatted = "-" + (int)(product.getDiscount()) + "%";
+
+        holder.textViewOldPrice.setText(priceFormatted);
+        holder.textViewOldPrice.setPaintFlags(holder.textViewOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.textViewTotal.setText(totalFormatted);
+        holder.textViewDiscount.setText(discountFormatted);
+
+        if (product.getDiscount() > 0) {
+            holder.textViewOldPrice.setVisibility(View.VISIBLE);
+            holder.textViewDiscount.setVisibility(View.VISIBLE);
+        } else {
+            holder.textViewOldPrice.setVisibility(View.GONE);
+            holder.textViewDiscount.setVisibility(View.GONE);
+        }
 
         Glide.with(context)
                 .load(product.getImageUrl())
@@ -67,13 +80,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewProduct;
-        TextView textViewName, textViewPrice;
+        TextView textViewName, textViewOldPrice, textViewDiscount, textViewTotal;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
             textViewName = itemView.findViewById(R.id.textViewName);
-            textViewPrice = itemView.findViewById(R.id.textViewPrice);
+            textViewOldPrice = itemView.findViewById(R.id.textViewOldPrice);
+            textViewDiscount = itemView.findViewById(R.id.textViewDiscount);
+            textViewTotal = itemView.findViewById(R.id.textViewTotal);
         }
     }
 }

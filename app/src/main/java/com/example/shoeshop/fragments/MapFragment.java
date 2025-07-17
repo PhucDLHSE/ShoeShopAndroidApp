@@ -1,12 +1,15 @@
-package com.example.shoeshop.activities;
+package com.example.shoeshop.fragments;
 
 import android.Manifest;
-import android.content.Intent; // Import này cần thiết để quay lại MainActivity
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.shoeshop.R;
@@ -19,25 +22,24 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 
-public class MapActivity extends AppCompatActivity {
+public class MapFragment extends Fragment {
+
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView mapView;
     private ImageView btnButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Configuration.getInstance().load(getApplicationContext(), getSharedPreferences("osmdroid", MODE_PRIVATE));
-        setContentView(R.layout.activity_map);
+    public MapFragment() {
+    }
 
-        mapView = findViewById(R.id.mapView);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Configuration.getInstance().load(requireContext(), requireActivity().getSharedPreferences("osmdroid", getContext().MODE_PRIVATE));
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+
+        mapView = view.findViewById(R.id.mapView);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
-
-        btnButton = findViewById(R.id.btnButton);
-        btnButton.setOnClickListener(v -> {
-            finish();
-        });
 
         requestPermissionsIfNecessary();
 
@@ -50,15 +52,16 @@ public class MapActivity extends AppCompatActivity {
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         marker.setTitle("Đ. Trường Sơn, P. Tân, Sơn Hoà, Hồ Chí Minh, Việt Nam");
         mapView.getOverlays().add(marker);
+
+        return view;
     }
 
     private void requestPermissionsIfNecessary() {
-        String[] permissions = new String[]{
+        String[] permissions = new String[] {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         };
-
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS_REQUEST_CODE);
+        ActivityCompat.requestPermissions(requireActivity(), permissions, REQUEST_PERMISSIONS_REQUEST_CODE);
     }
 
     @Override
@@ -68,21 +71,20 @@ public class MapActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE &&
                 grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-            MyLocationNewOverlay locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), mapView);
+            MyLocationNewOverlay locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), mapView);
             locationOverlay.enableMyLocation();
             mapView.getOverlays().add(locationOverlay);
         }
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         mapView.onResume();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         mapView.onPause();
     }

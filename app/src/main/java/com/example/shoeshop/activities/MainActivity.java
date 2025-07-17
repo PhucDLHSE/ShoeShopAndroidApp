@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.shoeshop.R;
+import com.example.shoeshop.fragments.ChatAiFragment;
 import com.example.shoeshop.fragments.HomeFragment;
+import com.example.shoeshop.fragments.MapFragment;
 import com.example.shoeshop.fragments.UserProfileFragment;
 import com.example.shoeshop.utils.CartStorage;
 import com.example.shoeshop.utils.ThemeHelper;
@@ -18,11 +20,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-
-    // 🔁 Biến để lưu tab hiện tại
     private int currentTabId = R.id.nav_home;
 
-    // 📥 Nhận kết quả từ SettingsActivity
     private final ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -40,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (themeChanged) {
-                        recreate(); // ⚡ Áp dụng dark/light theme mới
+                        recreate();
                     } else {
-                        bottomNavigationView.setSelectedItemId(currentTabId); // về lại tab cũ
+                        bottomNavigationView.setSelectedItemId(currentTabId);
                     }
                 }
             }
@@ -67,15 +66,15 @@ public class MainActivity extends AppCompatActivity {
                 loadFragment(new UserProfileFragment());
                 return true;
             } else if (id == R.id.nav_chat) {
-                startActivity(new Intent(MainActivity.this, ChatAiActivity.class));
+                loadFragment(new ChatAiFragment());
                 return true;
             } else if (id == R.id.nav_map) {
-                startActivity(new Intent(MainActivity.this, MapActivity.class));
-                return true;
-            } else if (id == R.id.nav_notifications) {
-                // Xử lý cho thông báo (nếu có fragment/activity riêng)
+                loadFragment(new MapFragment());
                 return true;
             }
+//           else if (id == R.id.nav_notifications) {
+//                return true;
+//            }
             return false;
         });
 
