@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF"
+    android:background="@android:color/white"
     android:fitsSystemWindows="true">
 
-    <!-- Header với nút back và tiêu đề -->
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back"
-            android:contentDescription="Quay lại"
             android:padding="4dp"
             android:background="?android:selectableItemBackgroundBorderless"
             app:tint="?attr/colorOnBackground" />
@@ -38,6 +37,7 @@
             android:layout_marginStart="12dp" />
     </LinearLayout>
 
+    <!-- Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -49,17 +49,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Hình ảnh sản phẩm -->
+            <!-- Product Image -->
             <ImageView
                 android:id="@+id/imgProductDetail"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/image_border_bg" />
+                android:background="@drawable/image_border_bg"
+                android:contentDescription="@string/product_image" />
 
-            <!-- Tên sản phẩm -->
+            <!-- Product Name -->
             <TextView
                 android:id="@+id/tvProductName"
                 android:layout_width="match_parent"
@@ -67,9 +67,27 @@
                 android:text="Tên sản phẩm"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="@android:color/black"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Giá sản phẩm -->
+            <TextView
+                android:id="@+id/textViewOldPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#9E9E9E"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/textViewDiscountPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FF5722"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp" />
+
+            <!-- Final Price -->
             <TextView
                 android:id="@+id/tvProductPrice"
                 android:layout_width="match_parent"
@@ -77,6 +95,7 @@
                 android:text="Giá: 0đ"
                 android:textSize="18sp"
                 android:textColor="#D32F2F"
+                android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
 
             <!-- Size -->
@@ -88,7 +107,7 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="6dp" />
 
-            <!-- Số lượng tồn kho -->
+            <!-- Stock -->
             <TextView
                 android:id="@+id/tvProductStock"
                 android:layout_width="match_parent"
@@ -97,7 +116,7 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Mô tả -->
+            <!-- Description -->
             <TextView
                 android:id="@+id/tvProductDescription"
                 android:layout_width="match_parent"
@@ -106,7 +125,7 @@
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Tiêu đề đánh giá -->
+            <!-- Feedback Title -->
             <TextView
                 android:id="@+id/tvFeedbackTitle"
                 android:layout_width="match_parent"
@@ -116,24 +135,24 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:textColor="#000000" />
+                android:textColor="@android:color/black" />
 
-            <!-- Danh sách đánh giá -->
+            <!-- Feedback RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFeedbackList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false" />
         </LinearLayout>
     </ScrollView>
 
-    <!-- Khu vực Button ở dưới -->
+    <!-- Footer Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:background="#FFFFFF"
+        android:background="@android:color/white"
         android:weightSum="2">
 
         <Button
@@ -142,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Thêm vào giỏ hàng"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:backgroundTint="#388E3C" />
 
         <Button
@@ -151,9 +170,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Đặt hàng"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#D32F2F"
-            android:layout_marginStart="8dp" />
-
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#D32F2F" />
     </LinearLayout>
 </LinearLayout>

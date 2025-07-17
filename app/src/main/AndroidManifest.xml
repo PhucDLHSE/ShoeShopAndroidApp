@@ -43,8 +43,6 @@
         <activity android:name=".activities.SearchProductActivity"/>
         <activity android:name=".activities.AddNewProductActivity"/>
         <activity android:name=".activities.FeedbackByProductListActivity"/>
-        <activity android:name=".activities.MapActivity" />
-        <activity android:name=".activities.ChatAiActivity" />
 
     </application>
 </manifest>

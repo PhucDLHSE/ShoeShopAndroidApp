@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.shoeshop.R;
+import com.example.shoeshop.fragments.ChatAiFragment;
 import com.example.shoeshop.fragments.HomeFragment;
+import com.example.shoeshop.fragments.MapFragment;
 import com.example.shoeshop.fragments.UserProfileFragment;
 import com.example.shoeshop.utils.CartStorage;
 import com.example.shoeshop.utils.ThemeHelper;
@@ -18,11 +20,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-
-    // 🔁 Biến để lưu tab hiện tại
     private int currentTabId = R.id.nav_home;
 
-    // 📥 Nhận kết quả từ SettingsActivity
     private final ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -40,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (themeChanged) {
-                        recreate(); // ⚡ Áp dụng dark/light theme mới
+                        recreate();
                     } else {
-                        bottomNavigationView.setSelectedItemId(currentTabId); // về lại tab cũ
+                        bottomNavigationView.setSelectedItemId(currentTabId);
                     }
                 }
             }
@@ -59,27 +58,26 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            currentTabId = id; // Cập nhật tab hiện tại
+            currentTabId = id;
             if (id == R.id.nav_home) {
                 loadFragment(new HomeFragment());
                 return true;
             } else if (id == R.id.nav_profile) {
                 loadFragment(new UserProfileFragment());
                 return true;
-            } else if (id == R.id.nav_chat) { // 👈 Thêm xử lý cho Chat AI
-                startActivity(new Intent(MainActivity.this, ChatAiActivity.class));
+            } else if (id == R.id.nav_chat) {
+                loadFragment(new ChatAiFragment());
                 return true;
-            } else if (id == R.id.nav_map) { // 👈 Thêm xử lý cho Map
-                startActivity(new Intent(MainActivity.this, MapActivity.class));
-                return true;
-            } else if (id == R.id.nav_notifications) {
-                // Xử lý cho thông báo (nếu có fragment/activity riêng)
+            } else if (id == R.id.nav_map) {
+                loadFragment(new MapFragment());
                 return true;
             }
+//           else if (id == R.id.nav_notifications) {
+//                return true;
+//            }
             return false;
         });
 
-        // Đảm bảo rằng tab được chọn ban đầu chính xác
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(currentTabId);
         }
