@@ -18,6 +18,7 @@
     import com.example.shoeshop.models.OrderRequest;
     import com.example.shoeshop.models.OrderResponse;
     import com.example.shoeshop.models.Product;
+    import com.example.shoeshop.models.ProductResponse;
     import com.example.shoeshop.models.PutProductRequest;
     import com.example.shoeshop.models.RegisterRequest;
     import com.example.shoeshop.models.StartOrderResponse;
@@ -52,6 +53,13 @@
         Call<List<Product>> getAllProducts();
         @GET("Product/{productId}")
         Call<Product> getProductById(@Path("productId") String productId);
+
+        @GET("Product/recently-added") // Hoặc một path phù hợp với API của bạn
+        Call<ProductResponse> getRecentlyAddedProducts(
+                @Query("lastCheckedTime") String lastCheckedTime // Truyền timestamp lần cuối kiểm tra
+        );
+
+
 
 
         @GET("Product/search")
