@@ -1,6 +1,5 @@
 package com.example.shoeshop.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
@@ -11,8 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.shoeshop.R;
-import com.example.shoeshop.activities.CreateDeliveryNoteActivity;
 import com.example.shoeshop.adapters.DeliveryPagerAdapter;
+import com.example.shoeshop.dialogs.CreateDeliveryDialogFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.*;
@@ -33,7 +32,7 @@ public class StaffDeliveryFragment extends Fragment {
 
         Button btn = v.findViewById(R.id.btnCreateDeliveryNote);
         btn.setOnClickListener(x ->
-                startActivity(new Intent(getContext(), CreateDeliveryNoteActivity.class))
+                new CreateDeliveryDialogFragment().show(getParentFragmentManager(), "create_delivery")
         );
 
         TabLayout tab = v.findViewById(R.id.tabDelivery);
@@ -46,7 +45,8 @@ public class StaffDeliveryFragment extends Fragment {
 
         vp.setAdapter(new DeliveryPagerAdapter(this, fragments));
         String[] titles = {"Chờ lấy hàng","Đang giao hàng","Đã giao hàng"};
-        new TabLayoutMediator(tab, vp, (t,pos)->t.setText(titles[pos])).attach();
+        int[] tabIcons = {R.drawable.ic_local_shipping, R.drawable.ic_delivery_truck_speed, R.drawable.ic_check };
+        new TabLayoutMediator(tab, vp, (t,pos)->t.setIcon(tabIcons[pos]).setText(titles[pos])).attach();
 
         // Pull-to-refresh section
         swipeRefresh.setOnRefreshListener(() -> {

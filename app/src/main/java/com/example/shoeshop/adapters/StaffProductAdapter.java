@@ -3,6 +3,7 @@ package com.example.shoeshop.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,43 +53,17 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
     @Override public void onBindViewHolder(@NonNull VH h, int i) {
         final int position = h.getAdapterPosition();
         Product p = list.get(position);
-        h.tvProductId.setText("Mã SP: " + p.getProductID());
-        h.tvProductName.setText("Tên SP: "+p.getProductName());
-        h.tvStatus.setText("Trạng Thái: " + (p.isStatus() ? "Có Sẵn" : "Hết Hàng"));
+        h.tvProductName.setText(p.getProductName());
+        h.tvProductName.setTypeface(null, Typeface.BOLD);
         Glide.with(context).load(p.getImageUrl()).into(h.ivProductImage);
 
-        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-
-        // Dữ liệu bên trong phần chi tiết
-        h.tvDescription.setText("Mô Tả SP: " + p.getDescription());
-        h.tvSize.setText("Kích Cỡ: " + p.getSize());
-        h.tvColor.setText("Màu SP: " + p.getColor());
-        h.tvPrice.setText("Giá Niêm Yết: " + formatter.format(p.getPrice())+" đ");
-        h.tvDiscount.setText("Khuyến Mãi: " + p.getDiscount()+"%");
-        h.tvTotal.setText("Giá SP: " + formatter.format(p.getTotal())+" đ");
-        h.tvSoldQty.setText("Đã Bán: " + p.getSoldQuantity());
-        h.tvStockQty.setText("Số Lượng Tồn Kho : " + p.getStockQuantity());
-        h.tvIsActive.setText("Trạng Thái Hoạt Động: " + (p.isActive()?"Có":"Không" ));
-
-        // Toggle logic
-        h.llDetails.setVisibility(View.GONE); // Đảm bảo accordion ban đầu đóng
-        h.tvToggleDetails.setText("Xem thêm");
-
-        h.tvToggleDetails.setOnClickListener(v -> {
-            boolean isVisible = h.llDetails.getVisibility() == View.VISIBLE;
-            h.llDetails.setVisibility(isVisible ? View.GONE : View.VISIBLE);
-            h.tvToggleDetails.setText(isVisible ? "Xem thêm" : "Thu gọn");
-        });
-
         // Edit
-        h.btnEditProduct.setOnClickListener(v -> {
+        h.ivEditProduct.setOnClickListener(v -> {
             context.startActivity(new Intent(context, EditProductActivity.class)
                     .putExtra("productId", p.getProductID()));
         });
-        h.btnEditProduct.setText("Sửa");
         // Delete
-        h.btnDeleteProduct.setText("Xoá");
-        h.btnDeleteProduct.setOnClickListener(v -> {
+        h.ivDeleteProduct.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Xác Nhận Xoá?")
                     .setMessage("Xoá Sản Phẩm " + p.getProductName() + "?")
@@ -110,31 +85,18 @@ public class StaffProductAdapter extends RecyclerView.Adapter<StaffProductAdapte
     @Override public int getItemCount() { return list.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
-        ImageView ivProductImage;
-        TextView tvProductId, tvProductName, tvStatus, tvToggleDetails;
-        LinearLayout llDetails;
-        TextView tvDescription, tvSize, tvColor, tvPrice, tvDiscount, tvTotal, tvSoldQty, tvStockQty, tvIsActive;
-        Button btnEditProduct, btnDeleteProduct;
-
+        ImageView ivProductImage, ivEditProduct, ivDeleteProduct;
+        TextView  tvProductName;
+        TextView  tvPrice, tvTotal, tvIsActive;
         public VH(@NonNull View v) {
             super(v);
             ivProductImage  = v.findViewById(R.id.ivProductImage);
-            tvProductId     = v.findViewById(R.id.tvProductId);
             tvProductName   = v.findViewById(R.id.tvProductName);
-            tvStatus        = v.findViewById(R.id.tvStatus);
-            tvToggleDetails = v.findViewById(R.id.tvToggleDetails);
-            llDetails       = v.findViewById(R.id.llDetails);
-            tvDescription   = v.findViewById(R.id.tvDescription);
-            tvSize          = v.findViewById(R.id.tvSize);
-            tvColor         = v.findViewById(R.id.tvColor);
             tvPrice         = v.findViewById(R.id.tvPrice);
-            tvDiscount      = v.findViewById(R.id.tvDiscount);
             tvTotal         = v.findViewById(R.id.tvTotal);
-            tvSoldQty       = v.findViewById(R.id.tvSoldQty);
-            tvStockQty      = v.findViewById(R.id.tvStockQty);
             tvIsActive      = v.findViewById(R.id.tvIsActive);
-            btnEditProduct  = v.findViewById(R.id.btnEditProduct);
-            btnDeleteProduct= v.findViewById(R.id.btnDeleteProduct);
+            ivEditProduct   = v.findViewById(R.id.ivEditProduct);
+            ivDeleteProduct = v.findViewById(R.id.ivDeleteProduct);
         }
     }
 }

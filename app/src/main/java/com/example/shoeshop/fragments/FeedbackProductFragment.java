@@ -9,13 +9,14 @@ import android.widget.Toast;
 
 import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.shoeshop.R;
 import com.example.shoeshop.activities.FeedbackByProductListActivity;
-import com.example.shoeshop.adapters.ProductSimpleAdapter;
+import com.example.shoeshop.adapters.ProductFeedbackAdapter;
 import com.example.shoeshop.models.Product;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
@@ -26,7 +27,7 @@ import java.util.*;
 
 public class FeedbackProductFragment extends Fragment {
     private RecyclerView rv;
-    private ProductSimpleAdapter adapter;
+    private ProductFeedbackAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
     private ProgressBar pb;
 
@@ -39,8 +40,8 @@ public class FeedbackProductFragment extends Fragment {
         swipeRefresh = v.findViewById(R.id.swipeRefreshProductList);
         pb           = v.findViewById(R.id.pbProductList);
         rv = v.findViewById(R.id.rvProductsForFeedback);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ProductSimpleAdapter(getContext(), list -> {
+        rv.setLayoutManager(new GridLayoutManager(getContext(),2));
+        adapter = new ProductFeedbackAdapter(getContext(), list -> {
             Intent intent = new Intent(getContext(), FeedbackByProductListActivity.class);
             intent.putExtra("productId", list.getProductID());
             Log.d("FeedbackProductFragment", "Product ID: " + list.getProductID());

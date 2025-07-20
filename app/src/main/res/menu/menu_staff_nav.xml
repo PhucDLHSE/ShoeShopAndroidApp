@@ -3,24 +3,26 @@
     <!-- Orders Tab -->
     <item
         android:id="@+id/nav_orders"
-        android:icon="@drawable/ic_order"
+        android:icon="@drawable/ic_orders"
         android:title="Đơn" />
-
     <!-- Delivery Tab -->
     <item
         android:id="@+id/nav_delivery"
-        android:icon="@drawable/ic_delivery"
+        android:icon="@drawable/ic_delivery_truck_speed"
         android:title="Vận Chuyển" />
-
     <!-- Product Tab -->
     <item
         android:id="@+id/nav_product"
-        android:icon="@drawable/ic_box"
-        android:title="Sản Phẩm" />
-
+        android:icon="@drawable/ic_category"
+        android:title="Sản Phẩm"
+        />
     <!-- Feedback Tab -->
     <item
         android:id="@+id/nav_feedback"
-        android:icon="@drawable/ic_feedback"
+        android:icon="@drawable/ic_feedback2"
         android:title="Đánh Giá" />
+    <!-- Profile tab -->
+    <item android:id="@+id/nav_staff_profile"
+        android:icon="@drawable/ic_account_box"
+        android:title="Hồ Sơ"/>
 </menu>

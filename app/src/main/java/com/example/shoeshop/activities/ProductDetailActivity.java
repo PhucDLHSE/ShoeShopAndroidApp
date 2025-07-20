@@ -26,7 +26,6 @@ import com.example.shoeshop.models.Product;
 import com.example.shoeshop.models.ProductOrderDetail;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
-import com.example.shoeshop.network.FeedbackApiClient;
 import com.example.shoeshop.utils.CartStorage;
 import com.example.shoeshop.utils.SessionManager;
 
@@ -162,7 +161,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     private void fetchFeedbackList(String productId) {
-        FeedbackApiClient.getClient().create(ApiService.class)
+        ApiClient.getClient().create(ApiService.class)
                 .getProductFeedback(productId)
                 .enqueue(new Callback<List<Feedback>>() {
                     @Override

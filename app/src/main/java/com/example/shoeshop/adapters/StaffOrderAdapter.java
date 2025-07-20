@@ -1,5 +1,6 @@
 package com.example.shoeshop.adapters;
 
+import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.*;
 import android.widget.*;
@@ -11,7 +12,7 @@ import com.example.shoeshop.models.Order;
 import com.example.shoeshop.models.StartOrderResponse;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.network.ApiClient;
-import com.example.shoeshop.utils.SessionManager;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +38,7 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     @NonNull @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.staff_item_order_card2, parent, false);
+                .inflate(R.layout.staff_item_order_card, parent, false);
         return new VH(v);
     }
 
@@ -45,17 +46,25 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     public void onBindViewHolder(@NonNull VH h, int position) {
         Order o = list.get(position);
         // Basic info
-        h.tvOrderId.setText("Mã Đơn: " + o.getOrderID());
+        String orderId = o.getOrderID();
+        if (orderId != null && orderId.length() > 8) {
+            orderId = orderId.substring(0, 8) ;
+        }
+        h.tvOrderId.setText("Mã Đơn: "+orderId);
+        h.tvStatus.setText(o.getStatus());
 
         try {
-            String formatted = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                    .format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-                            .parse(o.getOrderDate()));
+            String formatted = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
+                    .format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(o.getOrderDate()));
             h.tvDate.setText("Ngày Đặt: " + formatted);
         } catch (Exception e) {
             h.tvDate.setText("Ngày Đặt: " + o.getOrderDate());
         }
-        h.tvUserId.setText("Mã Khách hàng: " + o.getUserID());
+        String userId = o.getUserID();
+        if(userId != null && userId.length() > 8) {
+            userId = userId.substring(0, 8) ;
+        };
+        h.tvUserId.setText("Mã Khách Hàng: "+userId);
         h.tvAddress.setText("Địa chỉ: " + o.getDeliveryAddress());
         h.tvPaymentMethod.setText("Phương thức: " + o.getMethodName());
 
@@ -66,16 +75,16 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
         List<Order.OrderDetail> details = o.getOrderDetails();
         if (details != null && !details.isEmpty()) {
             Order.OrderDetail d0 = details.get(0);
-            h.imgProductThumb.setVisibility(View.VISIBLE);
+            h.ivProductThumb.setVisibility(View.VISIBLE);
             Glide.with(h.itemView.getContext())
                     .load(d0.getImageUrl())
                     .placeholder(R.drawable.placeholder)
-                    .into(h.imgProductThumb);
+                    .into(h.ivProductThumb);
             h.tvProductName.setText(d0.getProductName());
             String info = NumberFormat.getInstance(new Locale("vi","VN")).format(d0.getPrice()) + " x" + d0.getQuantity();
             h.tvProductInfo.setText(info);
         } else {
-            h.imgProductThumb.setVisibility(View.GONE);
+            h.ivProductThumb.setVisibility(View.GONE);
             h.tvProductName.setText("");
             h.tvProductInfo.setText("");
         }
@@ -83,16 +92,31 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
         // Toggle extra products
         boolean hasMore = details != null && details.size() > 1;
         boolean isExpanded = expandedMap.get(position, false);
-        h.btnToggleProducts.setVisibility(hasMore ? View.VISIBLE : View.GONE);
-        h.btnToggleProducts.setText(isExpanded ? "Thu gọn ⌃" : "Xem thêm ˅");
+        if (hasMore) {
+            h.layoutToggleProducts.setVisibility(View.VISIBLE);
+
+            if (isExpanded) {
+                h.tvToggleProducts.setText("Thu gọn");
+                h.ivToggleProducts.setImageResource(R.drawable.ic_chevron_up);
+            } else {
+                h.tvToggleProducts.setText("Xem thêm");
+                h.ivToggleProducts.setImageResource(R.drawable.ic_chevron_down);
+            }
+
+        } else {
+            h.layoutToggleProducts.setVisibility(View.GONE);
+        }
+
         h.layoutExtraProducts.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         if (isExpanded && hasMore) {
             h.layoutExtraProducts.removeAllViews();
             for (int i = 1; i < details.size(); i++) {
                 Order.OrderDetail d = details.get(i);
+
                 LinearLayout row = new LinearLayout(h.itemView.getContext());
                 row.setOrientation(LinearLayout.HORIZONTAL);
                 row.setPadding(0, 8, 0, 8);
+
                 ImageView img = new ImageView(h.itemView.getContext());
                 img.setLayoutParams(new LinearLayout.LayoutParams(
                         (int)(90*h.itemView.getResources().getDisplayMetrics().density),
@@ -101,16 +125,35 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
                 img.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(img.getContext()).load(d.getImageUrl())
                         .placeholder(R.drawable.placeholder).into(img);
-                TextView tv = new TextView(h.itemView.getContext());
-                tv.setText(d.getProductName() + "\n" +
-                        NumberFormat.getInstance(new Locale("vi","VN")).format(d.getPrice()) + " x" + d.getQuantity());
-                tv.setTextSize(14);
+
+                // Create a vertical layout for texts
+                LinearLayout textLayout = new LinearLayout(h.itemView.getContext());
+                textLayout.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                textLayoutParams.setMargins((int)(14 * h.itemView.getResources().getDisplayMetrics().density), 0, 0, 0);
+                textLayout.setLayoutParams(textLayoutParams);
+
+                TextView tvProductName = new TextView(h.itemView.getContext());
+                tvProductName.setText(d.getProductName());
+                tvProductName.setTextSize(14);
+
+                TextView tvProductInfo = new TextView(h.itemView.getContext());
+                tvProductInfo.setText(NumberFormat.getInstance(new Locale("vi", "VN")).format(d.getPrice()) + " x" + d.getQuantity());
+                tvProductInfo.setTextSize(13);
+                tvProductInfo.setTextColor(Color.GRAY);
+
+                textLayout.addView(tvProductName);
+                textLayout.addView(tvProductInfo);
+
+
                 row.addView(img);
-                row.addView(tv);
+                row.addView(textLayout);
+
                 h.layoutExtraProducts.addView(row);
             }
         }
-        h.btnToggleProducts.setOnClickListener(v -> {
+        h.layoutToggleProducts.setOnClickListener(v -> {
             expandedMap.put(position, !expandedMap.get(position, false));
             notifyItemChanged(position);
         });
@@ -121,21 +164,16 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
 
         // Handle status-specific actions
         if ("ordered".equals(status)) {
-            h.btnNext.setText("Đang thực hiện");
-            h.btnCancel.setText("Hủy");
             h.btnNext.setVisibility(View.VISIBLE);
             h.btnCancel.setVisibility(View.VISIBLE);
             h.btnNext.setOnClickListener(v -> api.startProcessingOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
             h.btnCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
         } else if ("processing".equals(status)) {
-            h.btnNext.setText("Chờ vận chuyển");
-            h.btnCancel.setText("Hủy");
             h.btnNext.setVisibility(View.VISIBLE);
             h.btnCancel.setVisibility(View.VISIBLE);
             h.btnNext.setOnClickListener(v -> api.pendingShipOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
             h.btnCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
         } else if ("waiting-ship".equals(status)) {
-            h.btnCancel.setText("Hủy");
             h.btnCancel.setVisibility(View.VISIBLE);
             h.btnCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
         }
@@ -155,14 +193,14 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     @Override public int getItemCount() { return list.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
-        ImageView imgProductThumb;
-        TextView tvProductName, tvProductInfo, tvOrderId, tvStatus, tvDate, tvPrice, tvUserId, tvAddress, tvPaymentMethod, tvIsActive, btnToggleProducts;
-        LinearLayout layoutExtraProducts;
+        ImageView ivProductThumb, ivToggleProducts;
+        TextView tvProductName, tvProductInfo, tvOrderId, tvStatus, tvDate, tvPrice, tvUserId, tvAddress, tvPaymentMethod, tvIsActive, tvToggleProducts ;
+        LinearLayout layoutExtraProducts, layoutToggleProducts;
         Button btnNext, btnCancel;
 
         VH(@NonNull View v) {
             super(v);
-            imgProductThumb    = v.findViewById(R.id.imgProductThumb);
+            ivProductThumb    = v.findViewById(R.id.ivProductThumb);
             tvProductName      = v.findViewById(R.id.tvProductName);
             tvProductInfo      = v.findViewById(R.id.tvProductInfo);
             tvOrderId          = v.findViewById(R.id.tvOrderId);
@@ -173,10 +211,12 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
             tvAddress          = v.findViewById(R.id.tvAddress);
             tvPaymentMethod    = v.findViewById(R.id.tvPaymentMethod);
             tvIsActive         = v.findViewById(R.id.tvIsActive);
-            btnToggleProducts  = v.findViewById(R.id.btnToggleProducts);
+            tvToggleProducts  = v.findViewById(R.id.tvToggleProducts);
             layoutExtraProducts= v.findViewById(R.id.layoutExtraProducts);
+            layoutToggleProducts = v.findViewById(R.id.layoutToggleProducts);
             btnNext            = v.findViewById(R.id.btnNext);
             btnCancel          = v.findViewById(R.id.btnCancel);
+            ivToggleProducts = v.findViewById(R.id.ivToggleProducts);
         }
     }
 }

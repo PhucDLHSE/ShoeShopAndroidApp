@@ -14,7 +14,7 @@ import com.example.shoeshop.models.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductSimpleAdapter extends RecyclerView.Adapter<ProductSimpleAdapter.VH> {
+public class ProductFeedbackAdapter extends RecyclerView.Adapter<ProductFeedbackAdapter.VH> {
     public interface OnProductClick {
         void onClick(Product product);
     }
@@ -22,7 +22,7 @@ public class ProductSimpleAdapter extends RecyclerView.Adapter<ProductSimpleAdap
     private final Context context;
     private final OnProductClick listener;
 
-    public ProductSimpleAdapter(Context context, OnProductClick listener) {
+    public ProductFeedbackAdapter(Context context, OnProductClick listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -35,7 +35,7 @@ public class ProductSimpleAdapter extends RecyclerView.Adapter<ProductSimpleAdap
 
     @NonNull
     @Override public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item_product_simple, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_product_feedback, parent, false);
         return new VH(v);
     }
 
@@ -45,8 +45,8 @@ public class ProductSimpleAdapter extends RecyclerView.Adapter<ProductSimpleAdap
         holder.tvDescription.setText(p.getDescription());
         Glide.with(context)
                 .load(p.getImageUrl())
-                .placeholder(R.drawable.placeholder) // Optional: add a placeholder image
-                .error(R.drawable.image_error) // Optional: add an error image
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.image_error) // An error image
                 .into(holder.ivImage);
         holder.itemView.setOnClickListener(v -> listener.onClick(p));
     }

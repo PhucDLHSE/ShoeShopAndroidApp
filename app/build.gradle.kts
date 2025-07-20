@@ -40,7 +40,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    // Thêm logging interceptor
+    // Logging interceptor
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.12.0")
@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.viewpager2)
     implementation(libs.preference)
 
-    //refresh layout
+    // Refresh layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation(libs.media3.common)
 

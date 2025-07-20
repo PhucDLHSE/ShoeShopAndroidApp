@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_date_asc"
+        android:title="Date: Ascending"
+        android:icon="@drawable/ic_chevron_up" />
+
+    <item
+        android:id="@+id/sort_date_desc"
+        android:title="Date: Descending"
+        android:icon="@drawable/ic_chevron_down" />
+</menu>

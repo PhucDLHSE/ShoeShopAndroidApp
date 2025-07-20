@@ -6,6 +6,18 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn đơn hàng"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/orange_theme"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChooseOrders"
         android:layout_width="match_parent"
@@ -23,14 +35,18 @@
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy" />
+            android:text="Hủy"
+            android:textColor="@color/red"
+            android:backgroundTint="@android:color/transparent"/>
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Lưu"/>
+            android:text="Lưu"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/orange_theme"/>
 
     </LinearLayout>
 

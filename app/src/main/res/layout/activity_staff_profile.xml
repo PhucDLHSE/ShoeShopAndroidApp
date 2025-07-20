@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="28dp"
     android:orientation="vertical"
-    android:padding="18dp"
-    android:layout_marginTop="28dp">
-
-    <!-- Back button -->
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Back"
-        android:src="@drawable/ic_back"
-        app:tint="@color/black" />
+    android:padding="18dp">
 
     <!-- Avatar -->
     <ImageView
@@ -24,61 +13,121 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_user"
+        android:layout_marginBottom="16dp"
         android:contentDescription="Avatar"
-        android:layout_marginBottom="16dp" />
-
-    <!-- UserId -->
-    <TextView
-        android:id="@+id/tvUserId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UserId: "
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:src="@drawable/ic_account_box"
+        app:tint="@color/gray" />
 
     <!-- Name -->
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name: "
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_badge"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Name"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <!-- Email -->
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email: "
-        android:layout_marginBottom="8dp" />
-
-    <!-- Phone -->
-    <TextView
-        android:id="@+id/tvPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Phone Number: "
-        android:layout_marginBottom="8dp" />
-
-    <!-- Role -->
-    <TextView
-        android:id="@+id/tvRole"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Role Name: "
-        android:layout_marginBottom="16dp" />
-
-    <!-- Logout Button -->
-    <Button
-        android:id="@+id/btnLogout"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:text="Đăng Xuất"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@color/white" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mail"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Email" />
+    </LinearLayout>
+    <!-- Phone -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_call"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Phone Number" />
+    </LinearLayout>
+    <!-- Role -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_assignment_ind"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/tvRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Role" />
+    </LinearLayout>
+    <!-- Logout Button -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:elevation="0dp"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="12dp"
+            android:stateListAnimator="@null"
+            android:text="Đăng Xuất"
+            android:textColor="@color/red_logout"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_logout2"
+            app:iconPadding="8dp"
+            app:iconTint="@color/red_logout"
+            app:rippleColor="@color/red_logout_ripple" />
+    </LinearLayout>
 
 </LinearLayout>

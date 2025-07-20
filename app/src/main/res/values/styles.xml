@@ -4,4 +4,8 @@
         <item name="android:thumbTint">@color/colorAccent</item>
         <item name="android:trackTint">@color/nav_unselected</item>
     </style>
+    <style name="NoRippleNavStyle">
+        <item name="android:colorControlHighlight">@android:color/transparent</item> <!-- Tắt ripple -->
+    </style>
+
 </resources>

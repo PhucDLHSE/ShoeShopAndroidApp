@@ -1,6 +1,5 @@
 package com.example.shoeshop.fragments;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -11,14 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.example.shoeshop.R;
 import com.example.shoeshop.adapters.FeedbackAdapter;
 import com.example.shoeshop.models.Feedback;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
-import com.example.shoeshop.network.FeedbackApiClient;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,18 +43,15 @@ public class FeedbackAllFragment extends Fragment {
     }
 
     private void loadAll() {
-        Log.d("FeedbackAllFragment", "loadAll() called");
         swipeRefresh.setRefreshing(true);
         pb.setVisibility(View.VISIBLE);
-        ApiService api = FeedbackApiClient.getClient().create(ApiService.class);
+        ApiService api = ApiClient.getClient().create(ApiService.class);
         api.getAllFeedbacks().enqueue(new Callback<List<Feedback>>() {
             @Override public void onResponse(Call<List<Feedback>> c, Response<List<Feedback>> r) {
                 swipeRefresh.setRefreshing(false);
                 pb.setVisibility(View.GONE);
-                Log.d("FeedbackAllFragment", "onResponse called");
                 if (r.isSuccessful() && r.body() != null) {
                     List<Feedback> feedbacks = r.body();
-                    Log.d("FeedbackAllFragment", "Feedback count: " + feedbacks.size());
                     adapter.updateData(feedbacks);
                 }else {
                     Log.d("FeedbackAllFragment", "Response not successful or body is null");

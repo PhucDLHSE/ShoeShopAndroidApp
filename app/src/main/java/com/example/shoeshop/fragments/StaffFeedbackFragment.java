@@ -26,6 +26,7 @@ public class StaffFeedbackFragment extends Fragment {
         );
         vp.setAdapter(new FeedbackPagerAdapter(this, frags));
         String[] titles = {"Tất Cả","Theo Sản Phẩm"};
-        new TabLayoutMediator(tab, vp, (t,pos)->t.setText(titles[pos])).attach();
+        int[] tabIcons = {R.drawable.ic_3p, R.drawable.ic_category_search};
+        new TabLayoutMediator(tab, vp, (t,pos)->t.setIcon(tabIcons[pos]).setText(titles[pos])).attach();
     }
 }

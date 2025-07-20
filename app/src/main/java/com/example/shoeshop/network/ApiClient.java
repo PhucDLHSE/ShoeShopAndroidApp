@@ -14,13 +14,7 @@ public class ApiClient {
 
     public static Retrofit getClient() {
         if (retrofit == null) {
-            // Create a logging interceptor
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            // Set the desired log level
-            // BODY: Logs headers, body, and metadata
-            // HEADERS: Logs headers and metadata
-            // BASIC: Logs request method, URL, response code, and response message
-            // NONE: No logging
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             // Create an OkHttpClient and add the interceptor

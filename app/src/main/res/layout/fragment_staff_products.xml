@@ -1,53 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/swipeRefreshLayoutProducts"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <!-- Loading Spinner -->
-    <ProgressBar
-        android:id="@+id/pbLoadingProducts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        style="?android:attr/progressBarStyleLarge" />
-
-    <!-- Header buttons: Refresh, Search, Add -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="8dp">
-
-        <Button
-            android:id="@+id/btnRefreshProducts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refresh" />
-
-        <Button
-            android:id="@+id/btnSearchProducts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:layout_marginStart="8dp" />
-
-        <Button
-            android:id="@+id/btnAddProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
-
-    <!-- List of products -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProducts"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never" />
-</LinearLayout>
+        android:padding="10dp">
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tvDeliveryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quản lý Sản Phẩm"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:paddingVertical="16dp"
+            android:textColor="@color/orange_theme"/>
+
+        <!-- Loading Spinner -->
+        <ProgressBar
+            android:id="@+id/pbLoadingProducts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyleLarge" />
+
+        <!-- Header buttons Add and search bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_search2"
+                app:startIconTint="@color/gray"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/orange_theme"
+                app:boxCornerRadiusTopStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusBottomEnd="24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="48dp"
+                    android:hint="Tìm Kiếm..."
+                    android:textColor="@android:color/black"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddProduct"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text="Thêm Sản Phẩm"
+                app:icon="@drawable/ic_add"
+                app:iconPadding="8dp"
+                app:iconGravity="textStart"
+                app:cornerRadius="18dp"
+                android:backgroundTint="@color/orange_theme"
+                android:textColor="@android:color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingVertical="18dp"
+                android:elevation="4dp" />
+        </LinearLayout>
+
+        <!-- List of products -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProducts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

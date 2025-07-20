@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import com.example.shoeshop.fragments.StaffDeliveryFragment;
 import com.example.shoeshop.fragments.StaffFeedbackFragment;
 import com.example.shoeshop.fragments.StaffOrdersFragment;
 import com.example.shoeshop.fragments.StaffProductFragment;
+import com.example.shoeshop.fragments.StaffProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class StaffActivity extends AppCompatActivity {
@@ -21,16 +25,6 @@ public class StaffActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff);
-
-        // Profile icon click → ProfileActivity
-        ImageView ivProfile = findViewById(R.id.ivProfile);
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StaffActivity.this, StaffProfileActivity.class);
-                startActivity(intent);
-            }
-        });
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -47,9 +41,11 @@ public class StaffActivity extends AppCompatActivity {
                     selectedFragment = new StaffProductFragment();
                 } else if (id == R.id.nav_feedback) {
                     selectedFragment = new StaffFeedbackFragment();
-                } else {
-                    // default fallback
-                    selectedFragment = new StaffOrdersFragment();
+                } else if (id == R.id.nav_staff_profile) {
+                    selectedFragment = new StaffProfileFragment();
+                }
+                else {
+                    selectedFragment = new StaffOrdersFragment(); //Default fragment
                 }
 
                 getSupportFragmentManager()

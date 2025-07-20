@@ -11,6 +11,7 @@
         <item>Đã giao</item>
     </string-array>
     <string name="product_image">Product Image</string>
+    <string name="no_feedbacks_yet">No Feedbacks found for this product.</string>
 
 </resources>
 

@@ -1,98 +1,372 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp"
-    android:layout_margin="8dp">
+    card_view:cardElevation="4dp">
 
+    <!-- Main layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="18dp">
+        <!-- DeliveryID + Status layout-->
+        <LinearLayout
+            android:id="@+id/layoutDeliveryID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <!--Delivery ID and icon layout -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvDeliveryId"
+                <ImageView
+                    android:id="@+id/iconOrder"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_delivery_truck_speed"
+                    card_view:tint="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tvDeliveryId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery ID"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDeliveryStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_chip"
+                android:padding="8dp"
+                android:text="Delivery Status"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Layout address text and icon address -->
+        <LinearLayout
+            android:id="@+id/layoutAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery ID" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
 
-        <TextView
-            android:id="@+id/tvOrderId"
+            <ImageView
+                android:id="@+id/iconAddress"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_distance"
+                card_view:tint="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/tvDeliveryAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delivery Address" />
+        </LinearLayout>
+
+        <!-- Layout Date text and icon Date -->
+        <LinearLayout
+            android:id="@+id/layoutDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order ID" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
 
-        <TextView
-            android:id="@+id/tvDeliveryStatus"
+            <ImageView
+                android:id="@+id/iconDate"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_calendar_month"
+                card_view:tint="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/tvDeliveryDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery Date" />
+        </LinearLayout>
+
+        <!-- Layout Name text and icon Name -->
+        <LinearLayout
+            android:id="@+id/layoutName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery Status" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/iconName"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_id_card"
+                card_view:tint="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvDeliveryAddress"
+            <TextView
+                android:id="@+id/tvShipperName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Shipper Name" />
+        </LinearLayout>
+
+        <!-- Layout Phone text and icon Phone -->
+        <LinearLayout
+            android:id="@+id/layoutPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery Address" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/iconPhone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_call"
+                card_view:tint="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvShipperName"
+            <TextView
+                android:id="@+id/tvShipperPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shipper Phone" />
+        </LinearLayout>
+
+        <!-- Layout Note text and icon Note -->
+        <LinearLayout
+            android:id="@+id/layoutNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shipper Name" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/iconNote"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_sticky_note2"
+                card_view:tint="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvShipperPhone"
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Note" />
+        </LinearLayout>
+
+        <!-- Layout StorageName text and icon StorageName -->
+        <LinearLayout
+            android:id="@+id/layoutStorageName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shipper Phone" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/iconStorageName"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_garage_door"
+                card_view:tint="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvDeliveryDate"
+            <TextView
+                android:id="@+id/tvStorageName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Storage Name" />
+        </LinearLayout>
+
+        <!-- Layout OrderID text and icon OrderID -->
+        <LinearLayout
+            android:id="@+id/layoutOrderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery Date" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/iconOrderId"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_orders"
+                card_view:tint="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvStorageName"
+            <TextView
+                android:id="@+id/tvOrderId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Order ID" />
+        </LinearLayout>
+
+        <!-- Layout UserId text and icon UserId -->
+        <LinearLayout
+            android:id="@+id/layoutUserId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Storage Name" />
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/iconUserId"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_account_box"
+                card_view:tint="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Note" />
+            <TextView
+                android:id="@+id/tvUserId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User ID" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvIsActive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Is Active" />
-
+        <!-- Layout sản phẩm đầu tiên -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivProductThumb"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Tên sản phẩm đầu tiên"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvProductInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Giá x SL"
+                    android:textColor="#8A8A8A"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Danh sách sản phẩm mở rộng -->
+        <LinearLayout
+            android:id="@+id/layoutExtraProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <!-- Nút hành động -->
+        <LinearLayout
+            android:id="@+id/layoutActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="8dp">
-
-            <Button
-                android:id="@+id/btnNext"
+            android:layout_marginHorizontal="4dp">
+            <!-- Nút bấm xem thêm sản phẩm -->
+            <LinearLayout
+                android:id="@+id/layoutToggleProducts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next" />
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnCancel"
+                <TextView
+                    android:id="@+id/tvToggleProducts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem thêm"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivToggleProducts"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_chevron_down"
+                    card_view:tint="@android:color/black" />
+            </LinearLayout>
+            <!-- Spacer to push next buttons to the end -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <!--layout for cancel and next buttons-->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:layout_marginStart="8dp" />
+                android:gravity="end"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Cancel"
+                    android:textColor="@color/red" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/orange_theme"
+                    android:text="Next"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -36,7 +36,8 @@ public class StaffOrdersFragment extends Fragment {
         );
         vp.setAdapter(new StaffOrdersPagerAdapter(this, new ArrayList<>(frags)));
         String[] titles = {"Đã đặt","Đang thực hiện","Chờ vận chuyển","Đang giao","Đã giao","Đã huỷ"};
-        new TabLayoutMediator(tab, vp, (t,pos) -> t.setText(titles[pos])).attach();
+        int[] tabIcons = {R.drawable.ic_orders, R.drawable.ic_cycle, R.drawable.ic_local_shipping, R.drawable.ic_delivery_truck_speed, R.drawable.ic_check, R.drawable.ic_cancel };
+        new TabLayoutMediator(tab, vp, (t,pos) ->t.setIcon(tabIcons[pos]).setText(titles[pos])).attach();
 
         // Pull-to-refresh: gọi lại loadData() trên từng fragment con
         swipeRefresh.setOnRefreshListener(() -> {

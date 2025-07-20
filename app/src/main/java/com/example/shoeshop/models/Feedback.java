@@ -10,7 +10,7 @@ public class Feedback {
         private String productName;
         private int rating;
         private String comment;
-        private Date createdAt;
+        private String createdAt;
         private boolean isActive;
 
     // Getters and Setters
@@ -56,8 +56,8 @@ public class Feedback {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
     public boolean isActive() { return isActive; }
     public void setActive(boolean active) { isActive = active; }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> <!--fragment_orders-->
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,18 +9,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
-        <!-- TabLayout chỉ wrap content chiều cao -->
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tvDeliveryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quản lý trạng thái đơn hàng"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:paddingVertical="16dp"
+            android:textColor="@color/orange_theme"/>
+
+        <!-- TabLayout -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabOrders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:tabMode="scrollable"
-            app:tabGravity="fill" />
+            app:tabGravity="fill"
+            app:tabTextColor="@color/gray"
+            app:tabSelectedTextColor="@color/orange_theme"
+            app:tabIndicatorColor="@color/orange_theme"
+            app:tabIndicatorHeight="3dp"
+            app:tabIconTint="@color/tab_icon_color"
+            />
 
-        <!-- ViewPager chiếm phần còn lại -->
+        <!-- ViewPager -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPagerOrders"
             android:layout_width="match_parent"

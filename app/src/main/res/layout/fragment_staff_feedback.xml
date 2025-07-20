@@ -6,12 +6,29 @@
     android:layout_height="match_parent"
     android:padding="8dp">
 
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvDeliveryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý Đánh giá"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:paddingVertical="16dp"
+        android:textColor="@color/orange_theme"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:tabMode="fixed"
-        app:tabGravity="fill" />
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/orange_theme"
+        app:tabTextColor="@color/gray"
+        app:tabIconTint="@color/tab_icon_color"
+        app:tabSelectedTextColor="@color/orange_theme" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerFeedback"

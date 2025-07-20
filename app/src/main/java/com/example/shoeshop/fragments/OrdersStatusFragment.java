@@ -2,6 +2,7 @@ package com.example.shoeshop.fragments;
 
 import android.os.Bundle;
 import android.view.*;
+import android.widget.Toast;
 import android.widget.ProgressBar;
 
 import androidx.annotation.*;
@@ -74,12 +75,13 @@ public class OrdersStatusFragment extends Fragment {
             }
             @Override public void onFailure(Call<List<Order>> c, Throwable t) {
                 if (spinner != null) spinner.setVisibility(View.GONE);
-                // có thể show Toast
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Failed to load orders: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    /** Gọi từ parent để reload lại dữ liệu **/
     public void reloadData() {
         loadData();
     }

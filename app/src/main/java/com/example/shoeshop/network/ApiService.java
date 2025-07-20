@@ -5,6 +5,7 @@
     import com.example.shoeshop.models.CreateDeliveryRequest;
     import com.example.shoeshop.models.Feedback;
     import com.example.shoeshop.models.FeedbackRequest;
+    import com.example.shoeshop.models.OrderSearchResponse;
     import com.example.shoeshop.models.PatchDeliveryResponse;
     import com.example.shoeshop.models.CustomerAddress;
     import com.example.shoeshop.models.DeliveryStatusResponse;
@@ -66,8 +67,8 @@
                 @Header("Authorization") String token,
                 @Part("ProductName") RequestBody name,
                 @Part("Description") RequestBody desc,
-                @Part MultipartBody.Part imageFile,        // file ảnh
-                @Part("ImageUrl") RequestBody imageUrl,    // nếu bạn vẫn muốn gửi url
+                @Part MultipartBody.Part imageFile,
+                @Part("ImageUrl") RequestBody imageUrl,
                 @Part("Size") RequestBody size,
                 @Part("Color") RequestBody color,
                 @Part("Price") RequestBody price,
@@ -118,6 +119,16 @@
                 @Header("Authorization") String token,
                 @Body OrderRequest request
         );
+        @GET("Order/search")
+        Call<OrderSearchResponse> searchOrders(
+                @Query("sortContent.SortOrderType") String sortOrderType,
+                @Query("Day") Integer day,
+                @Query("Month") Integer month,
+                @Query("Year") Integer year
+        );
+        @GET("Order/{orderId}") // Get an order by id
+        Call<Order> getOrderById(@Header("Authorization") String token, @Path("orderId") String orderId);
+
         @GET("Order/status/ordered")
         Call<List<Order>> getOrderedOrders(@Header("Authorization") String token);
         @GET("Order/status/processing")
@@ -149,8 +160,7 @@
         );
 
         //Delivery endpoints
-        //Tạo phiếu giao hàng
-        @POST("Delivery")
+        @POST("Delivery") //Tạo phiếu giao hàng
         Call<PatchDeliveryResponse> createDelivery(
                 @Header("Authorization") String token,
                 @Body CreateDeliveryRequest request
