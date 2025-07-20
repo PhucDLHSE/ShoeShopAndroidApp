@@ -26,7 +26,6 @@ import com.example.shoeshop.models.Product;
 import com.example.shoeshop.models.ProductOrderDetail;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.network.ApiService;
-import com.example.shoeshop.network.FeedbackApiClient;
 import com.example.shoeshop.utils.CartStorage;
 import com.example.shoeshop.utils.SessionManager;
 
@@ -108,33 +107,27 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void displayProductDetails(Product product) {
         if (product == null) return;
-
-        // Set tên sản phẩm
         tvProductName.setText(product.getProductName());
 
         double originalPrice = product.getPrice();     // Giá gốc
-        double discountAmount = product.getDiscount(); // Giảm giá (có thể = 0)
-        double finalPrice = product.getTotal();        // Giá sau giảm
+        double discountAmount = product.getDiscount(); // %discount
+        double finalPrice = product.getTotal();        // Giá sau khi discount
 
         NumberFormat format = NumberFormat.getInstance(new Locale("vi", "VN"));
 
         TextView textViewOldPrice = findViewById(R.id.textViewOldPrice);
         TextView textViewDiscountPrice = findViewById(R.id.textViewDiscountPrice);
 
-        // Nếu có giảm giá
         if (discountAmount > 0 && finalPrice < originalPrice) {
-            // Giá gốc có gạch ngang
             String formattedOriginal = format.format(originalPrice) + "đ";
             SpannableString spannable = new SpannableString(formattedOriginal);
             spannable.setSpan(new StrikethroughSpan(), 0, formattedOriginal.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             textViewOldPrice.setVisibility(View.VISIBLE);
             textViewOldPrice.setText(spannable);
 
-            // Giá giảm (số tiền giảm)
             textViewDiscountPrice.setVisibility(View.VISIBLE);
             textViewDiscountPrice.setText("Ưu đãi: " + format.format(discountAmount) + "%");
         } else {
-            // Không có giảm giá: ẩn 2 TextView
             textViewOldPrice.setVisibility(View.GONE);
             textViewDiscountPrice.setVisibility(View.GONE);
         }
@@ -162,7 +155,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     private void fetchFeedbackList(String productId) {
-        FeedbackApiClient.getClient().create(ApiService.class)
+        ApiClient.getClient().create(ApiService.class)
                 .getProductFeedback(productId)
                 .enqueue(new Callback<List<Feedback>>() {
                     @Override
@@ -220,7 +213,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     currentProduct.getProductID(),
                     currentProduct.getProductName(),
                     currentProduct.getImageUrl(),
-                    currentProduct.getDiscount(), // Lấy giá đã giảm
+                    currentProduct.getDiscount(),
                     quantity[0]
             );
             CartStorage.getInstance().addToCart(item);

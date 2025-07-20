@@ -65,7 +65,7 @@ public class ChatAiFragment extends Fragment {
 
         etMessage = view.findViewById(R.id.etMessage);
         btnSend = view.findViewById(R.id.btnSend);
-        btnSend.setBackgroundTintList(null); // Đảm bảo tint list không ảnh hưởng
+        btnSend.setBackgroundTintList(null);
         recyclerChat = view.findViewById(R.id.recyclerChat);
 
         messageList = new ArrayList<>();
@@ -117,31 +117,21 @@ public class ChatAiFragment extends Fragment {
         });
     }
 
-    /**
-     * Quyết định tải phiên chat hiện có hoặc bắt đầu một phiên chat mới cho người dùng.
-     * Phương thức này được gọi mỗi khi Fragment được tạo hoặc tái tạo View.
-     * @param userId ID của người dùng hiện tại.
-     */
     private void startOrLoadChatSession(String userId) {
         // Cố gắng lấy session ID đã lưu cho userId hiện tại
         final String savedChatSessionId = sessionManager.getChatSessionIdForUser(userId);
 
         if (savedChatSessionId != null && !savedChatSessionId.isEmpty()) {
-            // Trường hợp 1: Có session ID đã lưu cho user này (chưa logout)
             currentChatSessionId = savedChatSessionId;
             Log.d("ChatAI", "Loaded existing chat session: " + currentChatSessionId + " for user: " + userId);
 
-            // Xóa bất kỳ tin nhắn chờ nào và thêm tin nhắn "Đang tải..." mới
-            messageList.clear(); // Xóa sạch để chuẩn bị hiển thị lịch sử
+            messageList.clear();
             chatAdapter.notifyDataSetChanged();
             addMessage("assistant", "Đang tải lịch sử chat...");
 
-            // Tải lịch sử tin nhắn của phiên hiện tại
             loadChatMessages(currentChatSessionId);
 
         } else {
-            // Trường hợp 2: Không có session ID đã lưu cho user này
-            // (có thể là lần đầu chat, hoặc đã logout và login lại)
             Log.d("ChatAI", "No existing chat session found for user: " + userId + ". Starting a new one.");
             startNewChatSession(userId);
         }
@@ -162,10 +152,8 @@ public class ChatAiFragment extends Fragment {
             public void onResponse(Call<ChatSessionResponse> call, Response<ChatSessionResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     currentChatSessionId = response.body().getChatSessionID();
-                    // Lưu ChatSessionID vào SessionManager với userId cụ thể
                     sessionManager.saveChatSessionIdForUser(userId, currentChatSessionId);
                     Log.d("ChatAI", "Started new chat session: " + currentChatSessionId + " for user: " + userId);
-                    // Sau khi tạo thành công session mới, hiển thị tin nhắn chào mừng chính thức
                     replaceLastAssistantMessage("Chào bạn, tôi là trợ lý AI. Bạn muốn tìm sản phẩm nào?");
                 } else {
                     Log.e("ChatAI", "Failed to start chat session: " + response.code() + " - " + response.message());
@@ -196,9 +184,8 @@ public class ChatAiFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ChatMessage> fetchedMessages = response.body();
 
-                    if (isAdded()) { // Đảm bảo Fragment vẫn còn được gắn vào Activity
+                    if (isAdded()) {
                         requireActivity().runOnUiThread(() -> {
-                            // Xóa tin nhắn "Đang tải lịch sử chat..." ban đầu
                             if (!messageList.isEmpty() && "assistant".equals(messageList.get(messageList.size() - 1).getRole())) {
                                 String lastAssistantMsgContent = messageList.get(messageList.size() - 1).getContent();
                                 if (lastAssistantMsgContent.equals("Đang tải lịch sử chat...") ||
@@ -209,8 +196,7 @@ public class ChatAiFragment extends Fragment {
                                 }
                             }
 
-                            // Xóa toàn bộ danh sách hiện có và thêm các tin nhắn đã fetch
-                            messageList.clear(); // Clear lại lần nữa để chắc chắn trước khi add data
+                            messageList.clear();
 
                             if (fetchedMessages.isEmpty()) {
                                 Log.d("ChatAI", "No chat messages found for session: " + sessionId);
@@ -220,10 +206,8 @@ public class ChatAiFragment extends Fragment {
                                 for (com.example.shoeshop.models.ChatMessage msg : fetchedMessages) {
                                     addMessage(msg.getSenderID().equals(currentUserId) ? "user" : "assistant", msg.getMessage());
                                 }
-                                // Thêm một tin nhắn chào mừng hoặc kết thúc sau khi tải lịch sử hoàn tất
-                                addMessage("assistant", "Chào mừng bạn trở lại! Đây là lịch sử chat của bạn.");
+//                                addMessage("assistant", "Chào mừng bạn trở lại! Đây là lịch sử chat của bạn.");
                             }
-                            // Cuộn xuống cuối sau khi tất cả tin nhắn đã được thêm
                             recyclerChat.scrollToPosition(messageList.size() - 1);
                         });
                     }

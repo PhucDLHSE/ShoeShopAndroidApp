@@ -69,8 +69,8 @@
                 @Header("Authorization") String token,
                 @Part("ProductName") RequestBody name,
                 @Part("Description") RequestBody desc,
-                @Part MultipartBody.Part imageFile,        // file ảnh
-                @Part("ImageUrl") RequestBody imageUrl,    // nếu bạn vẫn muốn gửi url
+                @Part MultipartBody.Part imageFile,
+                @Part("ImageUrl") RequestBody imageUrl,
                 @Part("Size") RequestBody size,
                 @Part("Color") RequestBody color,
                 @Part("Price") RequestBody price,
@@ -152,7 +152,6 @@
         );
 
         //Delivery endpoints
-        //Tạo phiếu giao hàng
         @POST("Delivery")
         Call<PatchDeliveryResponse> createDelivery(
                 @Header("Authorization") String token,
@@ -204,7 +203,7 @@
                 @Header("Authorization") String token,
                 @Body FeedbackRequest request
         );
-        @DELETE("Feedback/{feedbackId}/hard") // Xóa phản hồi
+        @DELETE("Feedback/{feedbackId}/hard")
         Call<Void> deleteFeedback(
                 @Header("Authorization") String token,
                 @Path("feedbackId") String feedbackId

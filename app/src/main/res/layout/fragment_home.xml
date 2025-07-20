@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 🧠 HEADER: Search bar + Cart -->
+    <!-- HEADER: Search + Cart -->
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -47,7 +47,8 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="#888888"
                 android:singleLine="true"
-                android:inputType="text" />
+                android:inputType="text"
+                android:imeOptions="actionGo" />
 
             <!-- Icon micro -->
             <ImageView
