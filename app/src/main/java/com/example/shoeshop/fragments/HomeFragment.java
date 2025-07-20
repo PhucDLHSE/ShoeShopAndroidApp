@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -55,6 +57,19 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         searchEditText = view.findViewById(R.id.searchEditText);
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED ||
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                String query = searchEditText.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    searchProductsByName(query);
+                }
+                return true;
+            }
+            return false;
+        });
+
+
         micIcon = view.findViewById(R.id.micIcon);
 
         micIcon.setOnClickListener(v -> startVoiceRecognition());
