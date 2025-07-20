@@ -97,7 +97,7 @@
         android:padding="8dp"/>
 
 
-    <!-- 📦 RecyclerView hiển thị sản phẩm -->
+    <!-- RecyclerView hiển thị sản phẩm -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentHomeRecyclerView"
         android:layout_below="@id/header"
@@ -106,7 +106,7 @@
         android:layout_height="match_parent"
         android:padding="8dp" />
 
-    <!-- 🧭 Bottom Navigation -->
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
