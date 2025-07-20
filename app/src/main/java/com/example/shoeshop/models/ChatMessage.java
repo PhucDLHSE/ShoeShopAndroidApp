@@ -1,23 +1,23 @@
 package com.example.shoeshop.models;
 
-import java.util.Date; // Hoặc kiểu dữ liệu tương ứng với DateTime.UtcNow từ backend
+import java.time.Instant; // Thay đổi từ java.util.Date sang java.time.Instant
 
 public class ChatMessage {
     private String chatMessageID; // Optional, nếu bạn cần ID của tin nhắn
     private String chatSessionID;
     private String senderID;
     private String message; // Tương ứng với 'content' trong UI
-    private Date sentAt; // Thời gian gửi tin nhắn
+    private Instant sentAt; // Thời gian gửi tin nhắn - Đã đổi sang Instant
 
     // Constructor cho UI (role, content)
     public ChatMessage(String role, String content) {
-        // Ánh xạ role và content cho UI
-        this.senderID = role; // Có thể dùng role làm senderID tạm thời cho UI
+        this.senderID = role;
         this.message = content;
+        this.sentAt = Instant.now(); // Khởi tạo Instant khi tạo tin nhắn UI
     }
 
     // Constructor cho dữ liệu từ Backend
-    public ChatMessage(String chatMessageID, String chatSessionID, String senderID, String message, Date sentAt) {
+    public ChatMessage(String chatMessageID, String chatSessionID, String senderID, String message, Instant sentAt) {
         this.chatMessageID = chatMessageID;
         this.chatSessionID = chatSessionID;
         this.senderID = senderID;
@@ -58,17 +58,16 @@ public class ChatMessage {
         this.message = message;
     }
 
-    public Date getSentAt() {
+    public Instant getSentAt() { // Đã đổi kiểu trả về
         return sentAt;
     }
 
-    public void setSentAt(Date sentAt) {
+    public void setSentAt(Instant sentAt) { // Đã đổi kiểu tham số
         this.sentAt = sentAt;
     }
 
     // Helper method để lấy "role" cho UI từ senderID
     public String getRole() {
-
         return "user".equalsIgnoreCase(senderID) ? "user" : "assistant";
     }
 
@@ -80,3 +79,4 @@ public class ChatMessage {
         return message;
     }
 }
+
