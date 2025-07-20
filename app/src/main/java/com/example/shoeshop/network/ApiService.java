@@ -2,6 +2,9 @@
 
     import com.example.shoeshop.models.AddProductRequest;
     import com.example.shoeshop.models.AddProductResponse;
+    import com.example.shoeshop.models.ChatMessage;
+    import com.example.shoeshop.models.ChatSessionResponse;
+    import com.example.shoeshop.models.ChatMessageRequest;
     import com.example.shoeshop.models.CreateDeliveryRequest;
     import com.example.shoeshop.models.Feedback;
     import com.example.shoeshop.models.FeedbackRequest;
@@ -211,11 +214,21 @@
                 @Header("Authorization") String token,
                 @Body FeedbackRequest request
         );
-        @DELETE("Feedback/{feedbackId}/hard") // Xóa phản hồi
+        @DELETE("Feedback/{feedbackId}/hard")
         Call<Void> deleteFeedback(
                 @Header("Authorization") String token,
                 @Path("feedbackId") String feedbackId
         );
+
+        // Chat AI Endpoints
+        @POST("Chat/start-session")
+        Call<ChatSessionResponse> startChatSession(@Query("userId") String userId);
+
+        @POST("Chat/send")
+        Call<Void> sendChatMessage(@Body ChatMessageRequest message);
+
+        @GET("Chat/messages/{sessionId}")
+        Call<List<ChatMessage>> getChatMessages(@Path("sessionId") String sessionId);
 
 
     }
