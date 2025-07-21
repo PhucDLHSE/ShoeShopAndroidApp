@@ -15,6 +15,7 @@ import com.example.shoeshop.models.Feedback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,12 +47,23 @@ public class FeedbackProductAdapter extends RecyclerView.Adapter<FeedbackProduct
         h.tvUserName.setText(f.getName());
         h.ratingBar.setRating(f.getRating());
         h.tvComment.setText(f.getComment());
-        if (f.getCreatedAt() != null) {
-            h.tvDate.setText(fmt.format(f.getCreatedAt()));
+
+        if (f.getCreatedAt() != null && !f.getCreatedAt().isEmpty()) {
+            try {
+                SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                Date parsedDate = isoFormat.parse(f.getCreatedAt());
+
+                SimpleDateFormat displayFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                h.tvDate.setText(displayFormat.format(parsedDate));
+            } catch (Exception e) {
+                e.printStackTrace();
+                h.tvDate.setText("");
+            }
         } else {
             h.tvDate.setText("");
         }
     }
+
 
     @Override public int getItemCount() { return data.size(); }
 

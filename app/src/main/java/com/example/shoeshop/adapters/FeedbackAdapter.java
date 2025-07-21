@@ -150,10 +150,11 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.VH> {
                                     }
                                 } else {
                                     Toast.makeText(context, "Lỗi khi xóa phản hồi", Toast.LENGTH_SHORT).show();
+                                    Log.e("FeedbackAdapter", "Lỗi khi xóa phản hồi: " + response.code() + " - " + response.message());
                                 }
                             }
                             @Override public void onFailure(Call<Void> call, Throwable t) {
-                                Log.e("FeedbackAdapter", "Lỗi API khi xóa phản hồi Feedback ID: " + f.getFeedbackID(), t);
+                                Log.e("FeedbackAdapter", "Lỗi API khi xóa phản hồi Feedback ID: " + f.getFeedbackID() + ", Error: " + t.getMessage(), t);
                                 Toast.makeText(context, "Lỗi khi xóa phản hồi", Toast.LENGTH_SHORT).show();
                             }
                         });

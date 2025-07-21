@@ -12,14 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.shoeshop.R;
 import com.example.shoeshop.models.AddProductResponse;
 import com.example.shoeshop.models.Product;
-import com.example.shoeshop.models.PutProductRequest;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 

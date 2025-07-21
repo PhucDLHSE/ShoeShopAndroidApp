@@ -1,9 +1,7 @@
 package com.example.shoeshop.activities;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,12 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoeshop.R;
-import com.example.shoeshop.models.AddProductRequest;
 import com.example.shoeshop.models.AddProductResponse;
 import com.example.shoeshop.network.ApiService;
 import com.example.shoeshop.network.ApiClient;
 import com.example.shoeshop.utils.SessionManager;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
