@@ -159,23 +159,23 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
         });
 
         // Reset action buttons
-        h.btnNext.setVisibility(View.GONE);
-        h.btnCancel.setVisibility(View.GONE);
+        h.ivNext.setVisibility(View.GONE);
+        h.ivCancel.setVisibility(View.GONE);
 
         // Handle status-specific actions
         if ("ordered".equals(status)) {
-            h.btnNext.setVisibility(View.VISIBLE);
-            h.btnCancel.setVisibility(View.VISIBLE);
-            h.btnNext.setOnClickListener(v -> api.startProcessingOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
-            h.btnCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
+            h.ivNext.setVisibility(View.VISIBLE);
+            h.ivCancel.setVisibility(View.VISIBLE);
+            h.ivNext.setOnClickListener(v -> api.startProcessingOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
+            h.ivCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
         } else if ("processing".equals(status)) {
-            h.btnNext.setVisibility(View.VISIBLE);
-            h.btnCancel.setVisibility(View.VISIBLE);
-            h.btnNext.setOnClickListener(v -> api.pendingShipOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
-            h.btnCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
+            h.ivNext.setVisibility(View.VISIBLE);
+            h.ivCancel.setVisibility(View.VISIBLE);
+            h.ivNext.setOnClickListener(v -> api.pendingShipOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
+            h.ivCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
         } else if ("waiting-ship".equals(status)) {
-            h.btnCancel.setVisibility(View.VISIBLE);
-            h.btnCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
+            h.ivCancel.setVisibility(View.VISIBLE);
+            h.ivCancel.setOnClickListener(v -> api.cancelOrder("Bearer "+token, o.getOrderID()).enqueue(callbackRemove(position)));
         }
     }
 
@@ -193,11 +193,9 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
     @Override public int getItemCount() { return list.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
-        ImageView ivProductThumb, ivToggleProducts;
+        ImageView ivProductThumb, ivToggleProducts, ivCancel, ivNext;
         TextView tvProductName, tvProductInfo, tvOrderId, tvStatus, tvDate, tvPrice, tvUserId, tvAddress, tvPaymentMethod, tvIsActive, tvToggleProducts ;
         LinearLayout layoutExtraProducts, layoutToggleProducts;
-        Button btnNext, btnCancel;
-
         VH(@NonNull View v) {
             super(v);
             ivProductThumb    = v.findViewById(R.id.ivProductThumb);
@@ -214,8 +212,8 @@ public class StaffOrderAdapter extends RecyclerView.Adapter<StaffOrderAdapter.VH
             tvToggleProducts  = v.findViewById(R.id.tvToggleProducts);
             layoutExtraProducts= v.findViewById(R.id.layoutExtraProducts);
             layoutToggleProducts = v.findViewById(R.id.layoutToggleProducts);
-            btnNext            = v.findViewById(R.id.btnNext);
-            btnCancel          = v.findViewById(R.id.btnCancel);
+            ivNext            = v.findViewById(R.id.ivNext);
+            ivCancel          = v.findViewById(R.id.ivCancel);
             ivToggleProducts = v.findViewById(R.id.ivToggleProducts);
         }
     }

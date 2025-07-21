@@ -1,6 +1,5 @@
     package com.example.shoeshop.network;
 
-    import com.example.shoeshop.models.AddProductRequest;
     import com.example.shoeshop.models.AddProductResponse;
     import com.example.shoeshop.models.ChatMessage;
     import com.example.shoeshop.models.ChatSessionResponse;
@@ -19,7 +18,6 @@
     import com.example.shoeshop.models.OrderResponse;
     import com.example.shoeshop.models.Product;
     import com.example.shoeshop.models.ProductResponse;
-    import com.example.shoeshop.models.PutProductRequest;
     import com.example.shoeshop.models.RegisterRequest;
     import com.example.shoeshop.models.StartOrderResponse;
 

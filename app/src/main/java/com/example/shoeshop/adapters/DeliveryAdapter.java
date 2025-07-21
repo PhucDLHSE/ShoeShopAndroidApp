@@ -6,6 +6,7 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.*;
 import android.widget.*;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +38,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
     private final ApiService api;
     private final SparseBooleanArray expandedMap = new SparseBooleanArray();
 
-    private final Map<String, List<Order.OrderDetail>> detailsCache = new HashMap<>(); // Cache chi tiết đơn hàng
+    private final Map<String, List<Order.OrderDetail>> detailsCache = new HashMap<>();
     private final Map<String, String> userIdCache = new HashMap<>();
 
     public DeliveryAdapter(List<DeliveryStatusResponse> data, String token, String status) {
@@ -54,14 +55,16 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
         notifyDataSetChanged();
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_delivery_card, parent, false);
         return new VH(v);
     }
 
-    @Override public void onBindViewHolder(@NonNull VH h, int pos) {
+    @Override
+    public void onBindViewHolder(@NonNull VH h, int pos) {
         DeliveryStatusResponse d = list.get(pos);
         String orderId = d.getOrderID();
 
@@ -85,7 +88,6 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
             if (rawDate != null && rawDate.startsWith("0001-01-01")) {
                 h.tvDeliveryDate.setText("Ngày Giao: Không xác định");
             } else {
-                // Xử lý định dạng ngày ngay tại chỗ
                 String formattedDate = formatDeliveryDate(rawDate);
                 h.tvDeliveryDate.setText("Ngày Giao: " + formattedDate);
             }
@@ -94,28 +96,34 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
             Log.e("DeliveryDate", "Lỗi định dạng ngày", e);
         }
 
-
-
-        // 2) Ẩn/hiện nút Next/Cancel theo status
-        h.btnNext.setVisibility(View.GONE);
-        h.btnCancel.setVisibility(View.GONE);
+        h.ivNext.setVisibility(View.GONE);
+        h.ivCancel.setVisibility(View.GONE);
         if ("chờ lấy hàng".equals(status)) {
-            h.btnNext.setText("Đang giao hàng");
-            h.btnNext.setVisibility(View.VISIBLE);
-            h.btnNext.setOnClickListener(v ->
-                    api.startDelivery("Bearer "+token, d.getDeliveryID()).enqueue(callbackRemove(pos))
-            );
-            h.btnCancel.setText("Hủy");
-            h.btnCancel.setVisibility(View.VISIBLE);
-            h.btnCancel.setOnClickListener(v ->
-                    api.cancelDelivery("Bearer "+token, d.getDeliveryID()).enqueue(callbackRemove(pos))
-            );
+            h.ivNext.setVisibility(View.VISIBLE);
+            h.ivNext.setOnClickListener(v -> {
+                int realPos = h.getAdapterPosition();
+                if (realPos != RecyclerView.NO_POSITION) {
+                    api.startDelivery("Bearer " + token, d.getDeliveryID())
+                            .enqueue(callbackRemove(realPos));
+                }
+            });
+            h.ivCancel.setVisibility(View.VISIBLE);
+            h.ivCancel.setOnClickListener(v -> {
+                int realPos = h.getAdapterPosition();
+                if (realPos != RecyclerView.NO_POSITION) {
+                    api.cancelDelivery("Bearer " + token, d.getDeliveryID())
+                            .enqueue(callbackRemove(realPos));
+                }
+            });
         } else if ("đang giao hàng".equals(status)) {
-            h.btnNext.setText("Hoàn thành");
-            h.btnNext.setVisibility(View.VISIBLE);
-            h.btnNext.setOnClickListener(v ->
-                    api.completeDelivery("Bearer "+token, d.getDeliveryID()).enqueue(callbackRemove(pos))
-            );
+            h.ivNext.setVisibility(View.VISIBLE);
+            h.ivNext.setOnClickListener(v -> {
+                int realPos = h.getAdapterPosition();
+                if (realPos != RecyclerView.NO_POSITION) {
+                    api.completeDelivery("Bearer " + token, d.getDeliveryID())
+                            .enqueue(callbackRemove(realPos));
+                }
+            });
         }
 
         // 3) Lấy chi tiết đơn hàng (orderDetails) nếu chưa cache
@@ -123,25 +131,42 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
         String userId = userIdCache.get(orderId);
         if (details != null) {
             bindFirstProduct(h, details.get(0));
-            bindExtraProducts(h, pos, details);
+            int realPos = h.getAdapterPosition();
+            if (realPos != RecyclerView.NO_POSITION) {
+                bindExtraProducts(h, realPos, details);
+            }
             if (userId != null && !userId.isEmpty()) {
                 h.tvUserId.setText("Mã Khách Hàng: " + userId.substring(0, 8));
             }
         } else {
             api.getOrderById("Bearer " + token, orderId)
                     .enqueue(new Callback<Order>() {
-                        @Override public void onResponse(Call<Order> call, Response<Order> resp) {
+                        @Override
+                        public void onResponse(Call<Order> call, Response<Order> resp) {
                             if (resp.isSuccessful() && resp.body() != null) {
                                 List<Order.OrderDetail> od = resp.body().getOrderDetails();
                                 String uid = resp.body().getUserID();
+
+                                double totalAmount = resp.body().getTotalAmount();
+                                String formattedTotal = NumberFormat
+                                        .getInstance(new Locale("vi", "VN"))
+                                        .format(totalAmount);
+                                h.tvTotal.setText("Tổng tiền: " + formattedTotal);
+
                                 detailsCache.put(orderId, od);
                                 userIdCache.put(orderId, uid);
                                 bindFirstProduct(h, od.get(0));
-                                bindExtraProducts(h, pos, od);
+                                int realPos = h.getAdapterPosition();
+                                if (realPos != RecyclerView.NO_POSITION) {
+                                    bindExtraProducts(h, realPos, od);
+                                }
                                 h.tvUserId.setText("Mã Khách Hàng: " + resp.body().getUserID().substring(0, 8));
                             }
                         }
-                        @Override public void onFailure(Call<Order> call, Throwable t) { }
+
+                        @Override
+                        public void onFailure(Call<Order> call, Throwable t) {
+                        }
                     });
         }
     }
@@ -153,7 +178,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
                 .placeholder(R.drawable.placeholder)
                 .into(h.ivProductThumb);
         h.tvProductName.setText(d0.getProductName());
-        String info = NumberFormat.getInstance(new Locale("vi","VN")).format(d0.getPrice())
+        String info = NumberFormat.getInstance(new Locale("vi", "VN")).format(d0.getPrice())
                 + " x" + d0.getQuantity();
         h.tvProductInfo.setText(info);
     }
@@ -173,10 +198,10 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
                 // Tạo row container
                 LinearLayout row = new LinearLayout(h.itemView.getContext());
                 row.setOrientation(LinearLayout.HORIZONTAL);
-                row.setPadding(0,8,0,8);
+                row.setPadding(0, 8, 0, 8);
 
                 ImageView img = new ImageView(h.itemView.getContext());
-                int px = (int)(90 * h.itemView.getResources().getDisplayMetrics().density);
+                int px = (int) (90 * h.itemView.getResources().getDisplayMetrics().density);
                 row.addView(img, new LinearLayout.LayoutParams(px, ViewGroup.LayoutParams.WRAP_CONTENT));
                 img.setAdjustViewBounds(true);
                 img.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -187,7 +212,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
                 textLay.setOrientation(LinearLayout.VERTICAL);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                lp.setMargins((int)(14 * h.itemView.getResources().getDisplayMetrics().density), 0, 0, 0);
+                lp.setMargins((int) (14 * h.itemView.getResources().getDisplayMetrics().density), 0, 0, 0);
                 textLay.setLayoutParams(lp);
 
                 TextView tName = new TextView(h.itemView.getContext());
@@ -196,7 +221,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
 
                 TextView tInfo = new TextView(h.itemView.getContext());
                 tInfo.setText(
-                        NumberFormat.getInstance(new Locale("vi","VN")).format(od.getPrice())
+                        NumberFormat.getInstance(new Locale("vi", "VN")).format(od.getPrice())
                                 + " x" + od.getQuantity()
                 );
                 tInfo.setTextSize(13);
@@ -219,14 +244,24 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
 
     private Callback<PatchDeliveryResponse> callbackRemove(int pos) {
         return new Callback<PatchDeliveryResponse>() {
-            @Override public void onResponse(Call<PatchDeliveryResponse> c, Response<PatchDeliveryResponse> r) {
-                if (r.isSuccessful()) { list.remove(pos); notifyItemRemoved(pos); }
+            @Override
+            public void onResponse(Call<PatchDeliveryResponse> c, Response<PatchDeliveryResponse> r) {
+                if (r.isSuccessful()) {
+                    list.remove(pos);
+                    notifyItemRemoved(pos);
+                }
             }
-            @Override public void onFailure(Call<PatchDeliveryResponse> c, Throwable t) {}
+
+            @Override
+            public void onFailure(Call<PatchDeliveryResponse> c, Throwable t) {
+            }
         };
     }
 
-    @Override public int getItemCount() { return list.size(); }
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
 
     private String formatDeliveryDate(String rawDate) {
         if (rawDate == null || rawDate.isEmpty()) return "Không xác định";
@@ -261,11 +296,9 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
         TextView tvDeliveryId, tvDeliveryStatus, tvDeliveryAddress,
                 tvDeliveryDate, tvShipperName, tvShipperPhone,
                 tvStorageName, tvNote, tvIsActive,
-                tvToggleProducts, tvProductName, tvProductInfo, tvOrderId, tvUserId;
-        ImageView ivProductThumb, ivToggleProducts;
+                tvToggleProducts, tvProductName, tvProductInfo, tvOrderId, tvUserId, tvTotal;
+        ImageView ivProductThumb, ivToggleProducts, ivCancel, ivNext;
         LinearLayout layoutExtraProducts, layoutToggleProducts;
-        Button btnNext, btnCancel;
-
         VH(@NonNull View v) {
             super(v);
             tvDeliveryId = v.findViewById(R.id.tvDeliveryId);
@@ -282,12 +315,13 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
             tvToggleProducts = v.findViewById(R.id.tvToggleProducts);
             tvOrderId = v.findViewById(R.id.tvOrderId);
             tvUserId = v.findViewById(R.id.tvUserId);
+            tvTotal = v.findViewById(R.id.tvTotal); // mới
 
             layoutExtraProducts = v.findViewById(R.id.layoutExtraProducts);
             layoutToggleProducts = v.findViewById(R.id.layoutToggleProducts);
 
-            btnNext = v.findViewById(R.id.btnNext);
-            btnCancel = v.findViewById(R.id.btnCancel);
+            ivCancel = v.findViewById(R.id.ivCancel);
+            ivNext = v.findViewById(R.id.ivNext);
 
             ivProductThumb = v.findViewById(R.id.ivProductThumb);
             ivToggleProducts = v.findViewById(R.id.ivToggleProducts);

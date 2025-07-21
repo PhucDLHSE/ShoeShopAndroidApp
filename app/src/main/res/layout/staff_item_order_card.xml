@@ -281,27 +281,28 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/ivCancel"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/white"
-                    android:text="Huỷ"
-                    android:textColor="@color/red"
-                    android:drawableEnd="@drawable/ic_cancel"
-                    android:drawableTint="@color/red"/>
+                    android:background="@drawable/rounded_orange_background"
+                    android:contentDescription="Edit icon"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete2"
+                    card_view:tint="@color/white" />
 
-                <Button
-                    android:id="@+id/btnNext"
-                    android:paddingEnd="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/orange_theme"
-                    android:drawableEnd="@drawable/ic_arrow_forward"
-                    android:drawableTint="@android:color/white"
-                    android:textColor="@android:color/white" />
+                <ImageView
+                    android:id="@+id/ivNext"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_blue_background"
+                    android:contentDescription="Edit icon"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_arrow_right"
+                    card_view:tint="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

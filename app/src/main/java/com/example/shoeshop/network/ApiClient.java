@@ -1,7 +1,12 @@
 package com.example.shoeshop.network;
 
+import android.os.Build;
+
+import com.example.shoeshop.adapters.InstantAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.time.Instant;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,9 +24,13 @@ public class ApiClient {
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
                     .build();
-            Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS")
-                    .create();
+            Gson gson = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS")  // hỗ trợ các field Date nếu có
+                        .registerTypeAdapter(Instant.class, new InstantAdapter())
+                        .create();
+            }
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(client)

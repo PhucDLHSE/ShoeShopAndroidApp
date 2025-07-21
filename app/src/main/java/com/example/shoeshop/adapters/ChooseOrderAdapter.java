@@ -47,14 +47,8 @@ public class ChooseOrderAdapter extends RecyclerView.Adapter<ChooseOrderAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order order = orders.get(position);
         List<Order.OrderDetail> details = order.getOrderDetails();
-        // Bind data
         holder.tvOrderId.setText("Mã Đơn: " + order.getOrderID().substring(0,8));
         holder.tvUserId.setText("Người dùng: " + order.getUserID().substring(0,8));
-//        try{
-//            holder.tvDate.setText("Ngày Đặt: " + CustomDateAdapter.formatBackendDateForUI(order.getOrderDate()));
-//        } catch (Exception e) {
-//            holder.tvDate.setText("Ngày Đặt: " + order.getOrderDate()); //Fallback
-//        }
         try {
             String formatted = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
                     .format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).parse(order.getOrderDate()));
@@ -68,8 +62,8 @@ public class ChooseOrderAdapter extends RecyclerView.Adapter<ChooseOrderAdapter.
         holder.tvAddress.setText("Địa Chỉ Giao Hàng: "+ order.getDeliveryAddress());
         holder.tvPaymentMethod.setText("Phương Thức Thanh Toán: "+ order.getMethodName());
 
-        holder.btnCancel.setVisibility(View.GONE);
-        holder.btnNext.setVisibility(View.GONE);
+        holder.ivCancel.setVisibility(View.GONE);
+        holder.ivNext.setVisibility(View.GONE);
 
         // Highlight selected
         holder.itemView.setBackgroundColor(
@@ -177,7 +171,7 @@ public class ChooseOrderAdapter extends RecyclerView.Adapter<ChooseOrderAdapter.
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvOrderId, tvUserId, tvDate, tvStatus,
                 tvPrice, tvAddress, tvPaymentMethod, tvIsActive, tvProductName, tvProductInfo, tvToggleProducts;
-        ImageView ivProductThumb,ivToggleProducts;
+        ImageView ivProductThumb,ivToggleProducts, ivCancel, ivNext;
         LinearLayout layoutToggleProducts, layoutExtraProducts;
         Button btnNext, btnCancel;
         ViewHolder(@NonNull View itemView) {
@@ -200,8 +194,8 @@ public class ChooseOrderAdapter extends RecyclerView.Adapter<ChooseOrderAdapter.
             ivToggleProducts     = itemView.findViewById(R.id.ivToggleProducts);
             layoutExtraProducts  = itemView.findViewById(R.id.layoutExtraProducts);
 
-            btnCancel = itemView.findViewById(R.id.btnCancel);
-            btnNext = itemView.findViewById(R.id.btnNext);
+            ivCancel = itemView.findViewById(R.id.ivCancel);
+            ivNext = itemView.findViewById(R.id.ivNext);
         }
     }
 }

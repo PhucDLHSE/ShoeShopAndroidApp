@@ -20,7 +20,7 @@ public class CustomDateAdapter extends TypeAdapter<Date> {
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
         );
         for (SimpleDateFormat f : formats) f.setTimeZone(TimeZone.getTimeZone("UTC"));
-        UI_OUTPUT_FORMAT.setTimeZone(TimeZone.getDefault()); // Giờ địa phương
+        UI_OUTPUT_FORMAT.setTimeZone(TimeZone.getDefault());
     }
 
     @Override
@@ -37,12 +37,6 @@ public class CustomDateAdapter extends TypeAdapter<Date> {
         }
         throw new IOException("Unparseable date: " + s);
     }
-    /**
-     * Phương thức tĩnh để định dạng một chuỗi ngày tháng từ backend thành định dạng hiển thị cho UI.
-     * @param rawBackendDate Chuỗi ngày tháng từ backend (ví dụ: "2025-07-13T05:33:50.5324948")
-     * @return Chuỗi ngày tháng đã được định dạng cho UI (ví dụ: "13/07/2025 12:33" nếu giờ địa phương là UTC+7)
-     *         hoặc chuỗi gốc nếu không thể parse.
-     */
     public static String formatBackendDateForUI(String rawBackendDate) {
         if (rawBackendDate == null || rawBackendDate.isEmpty()) {
             return "N/A";
@@ -61,19 +55,16 @@ public class CustomDateAdapter extends TypeAdapter<Date> {
         for (SimpleDateFormat parser : parsers) {
             try {
                 parsedDate = parser.parse(rawBackendDate);
-                if (parsedDate != null) break; // Thoát nếu parse thành công
+                if (parsedDate != null) break;
             } catch (ParseException ignored) {
-                // Tiếp tục thử định dạng khác
             }
         }
 
         if (parsedDate != null) {
-            // Định dạng Date object đã parse được sang định dạng UI
-            // UI_OUTPUT_FORMAT đã được thiết lập múi giờ (ví dụ: TimeZone.getDefault())
             return UI_OUTPUT_FORMAT.format(parsedDate);
         } else {
             android.util.Log.w("CustomDateAdapter", "Could not parse date for UI: " + rawBackendDate);
-            return rawBackendDate; // Trả về chuỗi gốc nếu không parse được
+            return rawBackendDate;
         }
     }
 }

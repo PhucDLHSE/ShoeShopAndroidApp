@@ -2,6 +2,7 @@ package com.example.shoeshop.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
@@ -121,6 +122,7 @@ public class StaffProductFragment extends Fragment {
                     @Override public void onFailure(Call<List<Product>> c, Throwable t) {
                         pbLoading.setVisibility(View.GONE);
                         Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                        Log.d("loadProducts", "onFailure: " + t.getMessage());
                     }
                 });
     }
