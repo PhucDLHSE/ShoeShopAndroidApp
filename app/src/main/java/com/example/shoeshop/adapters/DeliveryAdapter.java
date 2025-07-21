@@ -151,7 +151,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.VH> {
                                 String formattedTotal = NumberFormat
                                         .getInstance(new Locale("vi", "VN"))
                                         .format(totalAmount);
-                                h.tvTotal.setText("Tổng tiền: " + formattedTotal);
+                                h.tvTotal.setText("Tổng tiền: " + formattedTotal + " đ");
 
                                 detailsCache.put(orderId, od);
                                 userIdCache.put(orderId, uid);
